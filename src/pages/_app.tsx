@@ -3,10 +3,17 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { CacheProvider, EmotionCache } from '@emotion/react';
+import type { EmotionCache } from '@emotion/react';
+import { CacheProvider } from '@emotion/react';
+
 import theme from 'src/theme';
 import createEmotionCache from 'src/createEmotionCache';
 
+import '@fontsource/open-sans/300.css';
+import '@fontsource/open-sans/400.css';
+import '@fontsource/open-sans/500.css';
+import '@fontsource/open-sans/800.css';
+import '@fontsource/open-sans/700.css';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 

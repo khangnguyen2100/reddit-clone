@@ -2,7 +2,8 @@
   "extends": [
     "next/core-web-vitals",
     "prettier",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:import/recommended"
   ],
   "rules": {
     "prettier/prettier": [
@@ -22,6 +23,20 @@
         "bracketSameLine": false
       }
     ],
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "newlines-between": "always"
+      }
+    ]
   }
 }
