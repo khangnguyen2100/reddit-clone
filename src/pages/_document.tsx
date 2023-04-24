@@ -9,8 +9,8 @@ import Document, {
 } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import { AppType } from 'next/app';
-import theme, { roboto } from '../src/theme';
-import createEmotionCache from '../src/createEmotionCache';
+import theme, { roboto } from 'src/theme';
+import createEmotionCache from 'src/createEmotionCache';
 import { MyAppProps } from './_app';
 
 interface MyDocumentProps extends DocumentProps {
@@ -69,7 +69,9 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App: React.ComponentType<React.ComponentProps<AppType> & MyAppProps>) =>
+      enhanceApp: (
+        App: React.ComponentType<React.ComponentProps<AppType> & MyAppProps>,
+      ) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />;
         },
@@ -79,7 +81,7 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   // This is important. It prevents Emotion to render invalid HTML.
   // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
   const emotionStyles = extractCriticalToChunks(initialProps.html);
-  const emotionStyleTags = emotionStyles.styles.map((style) => (
+  const emotionStyleTags = emotionStyles.styles.map(style => (
     <style
       data-emotion={`${style.key} ${style.ids.join(' ')}`}
       key={style.key}
