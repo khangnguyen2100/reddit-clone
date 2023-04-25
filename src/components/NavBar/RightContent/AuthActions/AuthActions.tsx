@@ -1,44 +1,59 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+} from '@mui/material';
 import type { TransitionProps } from '@mui/material/transitions';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 
+import { authModalState, AuthModalState } from 'src/atoms';
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
   },
   ref: React.Ref<unknown>,
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="down" ref={ref} {...props} />;
 });
 
 const AuthActions = () => {
-  const [open, setOpen] = useState(false);
+  const [authModal, setAuthModal] = useRecoilState(authModalState);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpen = (payload: AuthModalState) => {
+    setAuthModal(payload);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setAuthModal({
+      ...authModal,
+      open: false,
+    });
   };
   return (
     <div>
       <div className="flex items-center gap-x-2">
-        <button className="btn btn-primary" onClick={handleClickOpen}>
+        <button
+          className="btn btn-primary"
+          onClick={() => handleClickOpen({ open: true, view: 'login' })}
+        >
           Log in
         </button>
-        <button className="btn btn-outline btn-primary">Log out</button>
+        <button
+          className="btn btn-outline btn-primary"
+          onClick={() => handleClickOpen({ open: true, view: 'signup' })}
+        >
+          Sign Up
+        </button>
       </div>
       {/* modal */}
       <div>
         <Dialog
-          open={open}
+          open={authModal.open}
           TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
