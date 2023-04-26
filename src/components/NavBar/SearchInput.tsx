@@ -6,16 +6,16 @@ const SearchInput = () => {
   return (
     <Box sx={{ maxWidth: '404px', width: '100%' }}>
       <TextField
-        id="search-input"
-        placeholder="Search Reddit"
+        id='search-input'
+        placeholder='Search Reddit'
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
+            <InputAdornment position='start'>
               <SearchSharp sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
             </InputAdornment>
           ),
         }}
-        size="small"
+        size='small'
         sx={{
           width: '100%',
           fontSize: '1.4rem',

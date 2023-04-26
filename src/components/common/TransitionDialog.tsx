@@ -23,7 +23,7 @@ const TransitionDialog = (propsDialog: Props) => {
       TransitionComponent={Transition}
       keepMounted
       onClose={propsDialog.onClose}
-      aria-describedby="alert-dialog-slide-description"
+      aria-describedby='alert-dialog-slide-description'
     >
       {propsDialog.children}
     </Dialog>

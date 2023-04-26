@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import {
   Button,
   Dialog,
@@ -5,20 +6,25 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
   Slide,
 } from '@mui/material';
 import type { TransitionProps } from '@mui/material/transitions';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 
-import { authModalState, AuthModalState } from 'src/atoms';
+import { AuthModalState, authModalState } from 'src/atoms';
+
+import AuthInputs from './AuthInputs';
+import Oauth from './Oauth';
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
   },
   ref: React.Ref<unknown>,
 ) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Slide direction='down' ref={ref} {...props} />;
 });
 
 const AuthActions = () => {
@@ -34,17 +40,22 @@ const AuthActions = () => {
       open: false,
     });
   };
+  const renderTile = () => {
+    if (authModal.view === 'login') return 'Log in';
+    if (authModal.view === 'signup') return 'Sign Up';
+    return 'Reset Password';
+  };
   return (
     <div>
-      <div className="flex items-center gap-x-2">
+      <div className='flex items-center gap-x-2'>
         <button
-          className="btn btn-primary"
+          className='btn btn-primary'
           onClick={() => handleClickOpen({ open: true, view: 'login' })}
         >
           Log in
         </button>
         <button
-          className="btn btn-outline btn-primary"
+          className='btn btn-outline btn-primary'
           onClick={() => handleClickOpen({ open: true, view: 'signup' })}
         >
           Sign Up
@@ -57,14 +68,28 @@ const AuthActions = () => {
           TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
-          aria-describedby="alert-dialog-slide-description"
+          aria-describedby='alert-dialog-slide-description'
+          className='max-w-[700px]'
         >
-          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
-            </DialogContentText>
+          <DialogTitle>
+            {renderTile()}
+            <IconButton
+              aria-label='close'
+              onClick={handleClose}
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                color: theme => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent className='w-full'>
+            <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
+            <Oauth />
+            <AuthInputs />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Disagree</Button>

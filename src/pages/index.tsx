@@ -11,7 +11,7 @@ import { authModalState } from 'src/atoms';
 export default function Home() {
   const authModal = useRecoilValue(authModalState);
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth='lg'>
       <Box
         sx={{
           my: 4,
@@ -21,10 +21,10 @@ export default function Home() {
           alignItems: 'center',
         }}
       >
-        <Typography variant="h4" color={'blue'} component="h1" gutterBottom>
+        <Typography variant='h4' color={'blue'} component='h1' gutterBottom>
           Material UI - Next.js example in TypeScript
         </Typography>
-        <Link href="/about" color="secondary">
+        <Link href='/about' color='secondary'>
           {authModal.open ? 'open' : 'close'}
         </Link>
         <ProTip />

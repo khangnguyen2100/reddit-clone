@@ -21,12 +21,12 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html lang="en" className={openSans.className}>
+    <Html lang='en' className={openSans.className}>
       <Head>
         {/* PWA primary color */}
-        <meta name="theme-color" content={theme.palette.primary.main} />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <meta name="emotion-insertion-point" content="" />
+        <meta name='theme-color' content={theme.palette.primary.main} />
+        <link rel='shortcut icon' href='/favicon.ico' />
+        <meta name='emotion-insertion-point' content='' />
         {emotionStyleTags}
       </Head>
       <body>

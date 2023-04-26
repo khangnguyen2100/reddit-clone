@@ -5,7 +5,7 @@ import Avatar from './Avatar';
 
 const RightContent = () => {
   return (
-    <div className="flex items-center gap-x-1">
+    <div className='flex items-center gap-x-1'>
       <AuthActions />
       <Avatar />
     </div>
