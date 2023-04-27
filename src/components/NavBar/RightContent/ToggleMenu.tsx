@@ -11,7 +11,7 @@ import {
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Avatar = () => {
+const ToggleMenu = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -56,4 +56,4 @@ const Avatar = () => {
   );
 };
 
-export default Avatar;
+export default ToggleMenu;
