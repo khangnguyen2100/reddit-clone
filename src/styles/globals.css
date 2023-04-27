@@ -5,8 +5,11 @@
 @layer components {
   /* global styles */
   body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px;
+  }
+  h1,h2,h3 {
+    font-family: 'Noto Sans', sans-serif;
   }
   /* custom */
   .abs-center {

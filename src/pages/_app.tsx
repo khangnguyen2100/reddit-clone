@@ -8,12 +8,23 @@ import { RecoilRoot } from 'recoil';
 import Layout from 'src/components/Layout/Layout';
 import createEmotionCache from 'src/createEmotionCache';
 import theme from 'src/theme';
+// noto font
+import '@fontsource/noto-sans/100.css';
+import '@fontsource/noto-sans/200.css';
+import '@fontsource/noto-sans/300.css';
+import '@fontsource/noto-sans/400.css';
+import '@fontsource/noto-sans/500.css';
+import '@fontsource/noto-sans/700.css';
+import '@fontsource/noto-sans/800.css';
+import '@fontsource/noto-sans/900.css';
+// ibm fonts
+import '@fontsource/ibm-plex-sans/100.css';
+import '@fontsource/ibm-plex-sans/200.css';
+import '@fontsource/ibm-plex-sans/300.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/700.css';
 
-import '@fontsource/open-sans/300.css';
-import '@fontsource/open-sans/400.css';
-import '@fontsource/open-sans/500.css';
-import '@fontsource/open-sans/700.css';
-import '@fontsource/open-sans/800.css';
 import 'src/styles/globals.css';
 
 // Client-side cache, shared for the whole session of the user in the browser.

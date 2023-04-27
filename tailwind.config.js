@@ -3,8 +3,8 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      sans: ['Open Sans', 'sans-serif'],
-      // serif: ['Merriweather', 'serif'],
+      ibm: ['IBM Plex Sans', 'sans-serif'],
+      noto: ['Noto Sans', 'sans-serif'],
     },
     fontSize: {
       xs: '0.75rem', // 12px

@@ -1,8 +1,14 @@
 import { createTheme } from '@mui/material/styles';
-import { Open_Sans } from 'next/font/google';
+import { Noto_Sans, IBM_Plex_Sans } from 'next/font/google';
 
-export const openSans = Open_Sans({
-  weight: ['300', '400', '500', '600', '700', '800'],
+export const notoSans = Noto_Sans({
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['Helvetica', 'Arial', 'sans-serif'],
+});
+export const imbPlexSans = IBM_Plex_Sans({
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
@@ -11,8 +17,17 @@ export const openSans = Open_Sans({
 // Create a theme instance.
 const theme = createTheme({
   typography: {
-    fontFamily: openSans.style.fontFamily,
+    fontFamily: imbPlexSans.style.fontFamily,
     fontSize: 14,
+    h1: {
+      fontFamily: notoSans.style.fontFamily,
+    },
+    h2: {
+      fontFamily: notoSans.style.fontFamily,
+    },
+    h3: {
+      fontFamily: notoSans.style.fontFamily,
+    },
   },
 });
 

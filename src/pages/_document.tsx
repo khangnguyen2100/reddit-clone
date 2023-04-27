@@ -10,7 +10,7 @@ import Document, {
 import createEmotionServer from '@emotion/server/create-instance';
 import { AppType } from 'next/app';
 
-import theme, { openSans } from 'src/theme';
+import theme from 'src/theme';
 import createEmotionCache from 'src/createEmotionCache';
 
 import { MyAppProps } from './_app';
@@ -21,7 +21,7 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html lang='en' className={openSans.className}>
+    <Html lang='en'>
       <Head>
         {/* PWA primary color */}
         <meta name='theme-color' content={theme.palette.primary.main} />
