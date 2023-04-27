@@ -2,19 +2,26 @@ import React from 'react';
 import {
   Avatar as Ava,
   Box,
+  Divider,
   IconButton,
   Menu,
   MenuItem,
   Tooltip,
   Typography,
 } from '@mui/material';
+import { useSignOut } from 'react-firebase-hooks/auth';
+import { useSetRecoilState } from 'recoil';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { auth } from 'src/firebase/clientApp';
+import { authModalState } from 'src/atoms';
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 const ToggleMenu = () => {
+  const setAuthModal = useSetRecoilState(authModalState);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
+  const [signOut] = useSignOut(auth);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -22,6 +29,11 @@ const ToggleMenu = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const handleSignOut = () => {
+    signOut();
+    handleCloseUserMenu();
+    setAuthModal(prev => ({ ...prev, open: false }));
   };
   return (
     <Box sx={{ flexGrow: 0 }}>
@@ -51,6 +63,10 @@ const ToggleMenu = () => {
             <Typography textAlign='center'>{setting}</Typography>
           </MenuItem>
         ))}
+        <Divider />
+        <MenuItem onClick={handleSignOut}>
+          <Typography textAlign='center'>Log Out</Typography>
+        </MenuItem>
       </Menu>
     </Box>
   );

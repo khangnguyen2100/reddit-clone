@@ -12,14 +12,14 @@ import OAuth from './OAuth';
 
 const Login = () => {
   const setAuthModal = useSetRecoilState(authModalState);
+
   const [formError, setFormError] = useState<string>('');
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: '',
   });
-  const [signInWithEmailAndPassword, user, loading, firebaseError] =
+  const [signInWithEmailAndPassword, , loading, firebaseError] =
     useSignInWithEmailAndPassword(auth);
-  console.log('user:', user);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginForm({
       ...loginForm,
@@ -27,10 +27,7 @@ const Login = () => {
     });
   };
   const handleRedirectSignUpPage = () => {
-    setAuthModal({
-      open: true,
-      view: 'signup',
-    });
+    setAuthModal(prev => ({ ...prev, view: 'signup' }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

@@ -11,12 +11,8 @@ import {
 
 import { auth } from 'src/firebase/clientApp';
 const OAuth = () => {
-  const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] =
-    useSignInWithGoogle(auth);
-  console.log('userGoogle:', userGoogle);
-  console.log('errorGoogle:', errorGoogle);
-  const [signInWithGithub, userGithub, loadingGithub, errorGithub] =
-    useSignInWithGithub(auth);
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signInWithGithub] = useSignInWithGithub(auth);
 
   const className =
     'flex items-center rounded-3xl px-10 py-3 leading-none h-fit min-h-fit font-semibold border-solid border-[1px] transition-all duration-300 ease-in-out active:scale-[1.05]';

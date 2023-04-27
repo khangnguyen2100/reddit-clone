@@ -16,7 +16,7 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-  const [createUserWithEmailAndPassword, user, loading, firebaseError] =
+  const [createUserWithEmailAndPassword, , loading, firebaseError] =
     useCreateUserWithEmailAndPassword(auth);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

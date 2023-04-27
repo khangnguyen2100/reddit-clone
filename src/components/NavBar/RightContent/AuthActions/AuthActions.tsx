@@ -8,11 +8,13 @@ import {
   Slide,
 } from '@mui/material';
 import type { TransitionProps } from '@mui/material/transitions';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { AuthModalState, authModalState } from 'src/atoms';
 import { ButtonBg } from 'src/components/common';
+import { auth } from 'src/firebase/clientApp';
 
 import AuthInputs from './AuthInputs';
 
@@ -27,6 +29,7 @@ const Transition = React.forwardRef(function Transition(
 
 const AuthActions = () => {
   const [authModal, setAuthModal] = useRecoilState(authModalState);
+  const [user] = useAuthState(auth);
 
   const handleClickOpen = (payload: AuthModalState) => {
     setAuthModal(payload);
@@ -43,6 +46,12 @@ const AuthActions = () => {
     if (authModal.view === 'signup') return 'Sign Up';
     return 'Reset Password';
   };
+  useEffect(() => {
+    if (user) handleClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+  console.log('authModal:', authModal);
+
   return (
     <div>
       <div className='flex items-center gap-x-2'>
