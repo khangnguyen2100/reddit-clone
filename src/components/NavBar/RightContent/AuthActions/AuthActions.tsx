@@ -6,6 +6,7 @@ import {
   DialogTitle,
   IconButton,
   Slide,
+  Typography,
 } from '@mui/material';
 import type { TransitionProps } from '@mui/material/transitions';
 import React, { useEffect } from 'react';
@@ -41,11 +42,17 @@ const AuthActions = () => {
       open: false,
     });
   };
-  const renderTile = () => {
+  const renderTitle = () => {
     if (authModal.view === 'login') return 'Log in';
     if (authModal.view === 'signup') return 'Sign Up';
-    return 'Reset Password';
+    return 'Reset your Password';
   };
+  const renderDesc = () => {
+    if (authModal.view === 'resetPassword')
+      return 'Tell us the email address associated with your Reddit account, and we’ll send you an email with a link to reset your password.';
+    return 'By continuing, you are setting up a Reddit account and agree to our User Agreement and Privacy Policy.';
+  };
+
   useEffect(() => {
     if (user) handleClose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,12 +88,20 @@ const AuthActions = () => {
           maxWidth='xs'
           sx={{
             '& .MuiDialog-paper': {
-              padding: '20px 45px',
+              padding: '10px 45px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             },
           }}
         >
-          <DialogTitle className='text-center text-2xl font-semibold mb-5'>
-            {renderTile()}
+          <DialogTitle className='mb-5'>
+            <Typography variant='h3' className='text-xl font-semibold'>
+              {renderTitle()}
+            </Typography>
+            <Typography className='mt-2 text-sm font-medium'>
+              {renderDesc()}
+            </Typography>
             <IconButton
               aria-label='close'
               onClick={handleClose}
@@ -100,7 +115,7 @@ const AuthActions = () => {
               <CloseIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent className='w-full'>
             <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
             <AuthInputs />
           </DialogContent>
