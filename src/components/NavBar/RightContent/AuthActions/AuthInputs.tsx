@@ -9,7 +9,7 @@ import SignUp from './SignUp';
 const AuthInputs = () => {
   const authState = useRecoilValue(authModalState);
   return (
-    <div>
+    <div className='w-full'>
       {authState.view === 'login' && <Login />}
       {authState.view === 'signup' && <SignUp />}
     </div>

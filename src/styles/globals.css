@@ -45,10 +45,6 @@
     }
   }
 }
-.btn {
-  @apply rounded-3xl font-bold px-10 py-2 leading-none h-fit min-h-fit;
-}
-
 a {
   color: inherit;
   text-decoration: none;

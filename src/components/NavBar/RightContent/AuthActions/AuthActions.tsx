@@ -1,8 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import {
-  Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -14,9 +12,9 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 
 import { AuthModalState, authModalState } from 'src/atoms';
+import { ButtonBg } from 'src/components/common';
 
 import AuthInputs from './AuthInputs';
-import Oauth from './Oauth';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -48,18 +46,19 @@ const AuthActions = () => {
   return (
     <div>
       <div className='flex items-center gap-x-2'>
-        <button
-          className='btn btn-primary'
+        <ButtonBg
           onClick={() => handleClickOpen({ open: true, view: 'login' })}
+          background='orange'
         >
           Log in
-        </button>
-        <button
-          className='btn btn-outline btn-primary'
+        </ButtonBg>
+        <ButtonBg
+          outline
+          background='blue'
           onClick={() => handleClickOpen({ open: true, view: 'signup' })}
         >
           Sign Up
-        </button>
+        </ButtonBg>
       </div>
       {/* modal */}
       <div>
@@ -69,9 +68,15 @@ const AuthActions = () => {
           keepMounted
           onClose={handleClose}
           aria-describedby='alert-dialog-slide-description'
-          className='max-w-[700px]'
+          fullWidth
+          maxWidth='xs'
+          sx={{
+            '& .MuiDialog-paper': {
+              padding: '20px 45px',
+            },
+          }}
         >
-          <DialogTitle>
+          <DialogTitle className='text-center text-2xl font-semibold mb-5'>
             {renderTile()}
             <IconButton
               aria-label='close'
@@ -86,15 +91,10 @@ const AuthActions = () => {
               <CloseIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent className='w-full'>
+          <DialogContent>
             <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
-            <Oauth />
             <AuthInputs />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
-            <Button onClick={handleClose}>Agree</Button>
-          </DialogActions>
         </Dialog>
       </div>
     </div>

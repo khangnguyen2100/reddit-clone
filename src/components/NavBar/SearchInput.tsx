@@ -16,6 +16,7 @@ const SearchInput = () => {
           ),
         }}
         size='small'
+        autoComplete='off'
         sx={{
           width: '100%',
           fontSize: '1.4rem',

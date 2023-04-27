@@ -2,19 +2,6 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    colors: {
-      oran: '#ff5414',
-      secondary: '#0272c4',
-      divider: '#cccccc',
-      text: {
-        primary: '#222222',
-        secondary: '#7e8183',
-      },
-      sections: {
-        default: '#dae0e6',
-        paper: '#ffffff',
-      },
-    },
     fontFamily: {
       sans: ['Open Sans', 'sans-serif'],
       // serif: ['Merriweather', 'serif'],
@@ -56,7 +43,21 @@ module.exports = {
         medium: '977px',
         large: '1364px',
       },
+      colors: {
+        oran: 'hsl(16, 100%, 54%)',
+        oran_hover: 'hsl(16, 100%, 64%)',
+        blue: '#0272c4',
+        divider: '#cccccc',
+        text: {
+          primary: '#222222',
+          secondary: '#7e8183',
+        },
+        sections: {
+          default: '#dae0e6',
+          paper: '#ffffff',
+        },
+      },
     },
   },
-  plugins: [require('daisyui'), require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography')],
 };
