@@ -48,7 +48,7 @@ module.exports = {
         oran_hover: 'hsl(16, 100%, 64%)',
         blue: '#0272c4',
         divider: '#cccccc',
-        text: {
+        typo: {
           primary: '#222222',
           secondary: '#7e8183',
         },

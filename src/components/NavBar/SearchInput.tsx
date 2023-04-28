@@ -24,6 +24,7 @@ const SearchInput = () => {
             '& fieldset': {
               borderRadius: '30px',
               fontSize: '1.4rem',
+              border: '#ccc 1px solid',
             },
             '& .MuiInputBase-input': {
               fontSize: '14px',
