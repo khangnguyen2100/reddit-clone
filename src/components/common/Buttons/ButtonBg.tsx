@@ -30,15 +30,15 @@ const ButtonBg = (props: Props) => {
       variant='contained'
       onClick={onClick}
       className={clsx(
-        'rounded-3xl !shadow-none px-10 py-2 leading-none h-fit min-h-fit font-semibold border-solid border-[1px] transition-all duration-300 ease-in-out active:scale-[1.05]',
+        'h-fit min-h-fit rounded-3xl border-[1px] border-solid px-10 py-2 font-semibold leading-none !shadow-none transition-all duration-300 ease-in-out active:scale-[1.05]',
         background === 'orange' && !outline
-          ? '!bg-oran text-white border-oran hover:brightness-125'
+          ? 'border-oran !bg-oran text-white hover:brightness-125'
           : background === 'blue' && !outline
-          ? '!bg-blue text-white border-blue hover:brightness-125'
+          ? 'border-blue !bg-blue text-white hover:brightness-125'
           : background === 'orange' && outline
-          ? 'bg-transparent text-oran border-oran hover:bg-oran hover:text-white'
+          ? 'border-oran bg-transparent text-oran hover:bg-oran hover:text-white'
           : background === 'blue' && outline
-          ? 'bg-transparent text-blue border-blue hover:bg-blue hover:text-white'
+          ? 'border-blue bg-transparent text-blue hover:bg-blue hover:text-white'
           : '',
         className,
       )}

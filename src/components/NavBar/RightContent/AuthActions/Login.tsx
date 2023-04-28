@@ -61,7 +61,7 @@ const Login = () => {
       {/* inputs */}
       <form
         onSubmit={handleSubmit}
-        className='flex flex-col items-center w-full justify-center gap-y-3'
+        className='flex w-full flex-col items-center justify-center gap-y-3'
       >
         <Input
           id='email'
@@ -79,20 +79,20 @@ const Login = () => {
           onChange={onChange}
         />
         {/* error */}
-        <em className='text-red-500 text-sm text-center block -mt-2'>
+        <em className='-mt-2 block text-center text-sm text-red-500'>
           {formError ||
             FIREBASE_ERRORS[
               firebaseError?.message as keyof typeof FIREBASE_ERRORS
             ]}
         </em>
         {/* link */}
-        <div className='block text-sm my-4'>
+        <div className='my-4 block text-sm'>
           Forgot your
           <p
             onClick={() => {
               setAuthModal(prev => ({ ...prev, view: 'resetPassword' }));
             }}
-            className='underline inline cursor-pointer text-blue font-semibold'
+            className='inline cursor-pointer font-semibold text-blue underline'
           >
             {' '}
             password?
@@ -102,17 +102,17 @@ const Login = () => {
           type='submit'
           loading={loading}
           background='orange'
-          className='w-full flex justify-center py-4'
+          className='flex w-full justify-center py-4'
         >
           Log In
         </ButtonBg>
       </form>
       {/* link */}
-      <div className='block text-sm my-4'>
+      <div className='my-4 block text-sm'>
         New to Reddit?
         <p
           onClick={handleRedirectSignUpPage}
-          className='underline inline cursor-pointer text-blue font-semibold'
+          className='inline cursor-pointer font-semibold text-blue underline'
         >
           {' '}
           Sign Up

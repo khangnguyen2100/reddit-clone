@@ -6,9 +6,9 @@ import SearchInput from './SearchInput';
 
 const NavBar = () => {
   return (
-    <Box className={'bg-sections-paper w-full'}>
+    <Box className={'w-full bg-sections-paper'}>
       <Box
-        className={'flex items-center justify-between px-4 py-1 mx-auto w-full'}
+        className={'mx-auto flex w-full items-center justify-between px-4 py-1'}
       >
         <Logo />
         <SearchInput />

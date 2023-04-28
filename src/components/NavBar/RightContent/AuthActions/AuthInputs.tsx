@@ -10,7 +10,7 @@ import ResetPassword from './ResetPassword';
 const AuthInputs = () => {
   const authState = useRecoilValue(authModalState);
   return (
-    <div className='w-full mt-2'>
+    <div className='mt-2 w-full'>
       {authState.view === 'login' && <Login />}
       {authState.view === 'signup' && <SignUp />}
       {authState.view === 'resetPassword' && <ResetPassword />}

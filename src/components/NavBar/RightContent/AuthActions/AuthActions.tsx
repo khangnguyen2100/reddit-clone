@@ -95,12 +95,12 @@ const AuthActions = () => {
             // make the dialog full screen and center the content inside vertically
           }}
         >
-          <div className='flex-center flex-col h-fit'>
+          <div className='flex-center h-fit flex-col'>
             <DialogTitle className='mb-4'>
               <Typography variant='h4' className='text-xl font-medium'>
                 {renderTitle()}
               </Typography>
-              <Typography className='mt-2 text-xs font-noto'>
+              <Typography className='mt-2 font-noto text-xs'>
                 {renderDesc()}
               </Typography>
               <IconButton

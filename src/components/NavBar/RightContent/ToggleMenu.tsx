@@ -40,7 +40,7 @@ const ToggleMenu = () => {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title='Open settings'>
         <IconButton
-          className='flex items-center px-[15px] py-[6px] active:border-divider border border-transparent border-solid hover:border-divider rounded'
+          className='flex items-center rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider'
           onClick={handleOpenUserMenu}
           sx={{ p: 0 }}
         >

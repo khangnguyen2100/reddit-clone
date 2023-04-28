@@ -66,7 +66,7 @@ const SignUp = () => {
       {/* inputs */}
       <form
         onSubmit={handleSubmit}
-        className='flex flex-col items-center w-full justify-center gap-y-3'
+        className='flex w-full flex-col items-center justify-center gap-y-3'
       >
         <Input
           id='email'
@@ -92,7 +92,7 @@ const SignUp = () => {
           onChange={onChange}
         />
         {/* error */}
-        <em className='text-red-500 text-sm text-center block'>
+        <em className='block text-center text-sm text-red-500'>
           {formError ||
             FIREBASE_ERRORS[
               firebaseError?.message as keyof typeof FIREBASE_ERRORS
@@ -102,7 +102,7 @@ const SignUp = () => {
         <ButtonBg
           background='orange'
           type='submit'
-          className='w-full flex justify-center py-4 mt-5'
+          className='mt-5 flex w-full justify-center py-4'
           loading={loading}
         >
           Sign Up
@@ -110,11 +110,11 @@ const SignUp = () => {
       </form>
 
       {/* link */}
-      <div className='block text-sm my-4'>
+      <div className='my-4 block text-sm'>
         Already a redditor?
         <p
           onClick={handleRedirectLoginPage}
-          className='underline inline cursor-pointer text-blue font-semibold'
+          className='inline cursor-pointer font-semibold text-blue underline'
         >
           {' '}
           Log in

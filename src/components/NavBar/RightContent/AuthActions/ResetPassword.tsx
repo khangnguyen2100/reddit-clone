@@ -61,7 +61,7 @@ const ResetPassword = () => {
       {/* inputs */}
       <form
         onSubmit={handleSubmit}
-        className='flex flex-col items-center w-full justify-center gap-y-3'
+        className='flex w-full flex-col items-center justify-center gap-y-3'
       >
         <Input
           id='email'
@@ -71,13 +71,13 @@ const ResetPassword = () => {
           onChange={onChange}
         />
         {/* error */}
-        <em className='text-red-500 text-sm text-center block -mt-2'>
+        <em className='-mt-2 block text-center text-sm text-red-500'>
           {formError ||
             FIREBASE_ERRORS[
               firebaseError?.message as keyof typeof FIREBASE_ERRORS
             ]}
         </em>
-        <em className='text-blue text-xs block -mt-3'>
+        <em className='-mt-3 block text-xs text-blue'>
           {isEmailSend && 'Email sent successfully. Please check your inbox.'}
         </em>
 
@@ -85,17 +85,17 @@ const ResetPassword = () => {
           type='submit'
           loading={loading}
           background='orange'
-          className='w-full flex justify-center py-4'
+          className='flex w-full justify-center py-4'
         >
           Reset Password
         </ButtonBg>
       </form>
       {/* link */}
-      <div className='block text-sm my-4'>
+      <div className='my-4 block text-sm'>
         Go back to
         <p
           onClick={handleRedirectLoginPage}
-          className='underline inline cursor-pointer text-blue font-semibold'
+          className='inline cursor-pointer font-semibold text-blue underline'
         >
           {' '}
           Log In
