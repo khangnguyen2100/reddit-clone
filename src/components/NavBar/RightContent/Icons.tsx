@@ -2,11 +2,11 @@ import { Divider, IconButton } from '@mui/material';
 import React from 'react';
 import { BsArrowUpRightCircle, BsChatDots } from 'react-icons/bs';
 import {
-  IoAddSharp,
   IoFilterCircleOutline,
   IoNotificationsOutline,
   IoVideocamOutline
 } from 'react-icons/io5';
+import { VscAdd } from 'react-icons/vsc';
 type IconBtnProps = {
   onClick?: () => void;
   children: React.ReactNode;
@@ -48,7 +48,7 @@ const Icons = () => {
         <IoNotificationsOutline color='text-secondary' fontSize={20} />
       </IconBtn>
       <IconBtn>
-        <IoAddSharp color='text-secondary' fontSize={20} />
+        <VscAdd color='text-secondary' fontSize={20} />
       </IconBtn>
     </div>
   );
