@@ -2,7 +2,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import {
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
   Slide,
@@ -10,8 +9,8 @@ import {
 } from '@mui/material';
 import type { TransitionProps } from '@mui/material/transitions';
 import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useRecoilState } from 'recoil';
 
 import { AuthModalState, authModalState } from 'src/atoms';
 import { ButtonBg } from 'src/components/common';
@@ -89,36 +88,38 @@ const AuthActions = () => {
           sx={{
             '& .MuiDialog-paper': {
               padding: '10px 45px',
+              height: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              justifyContent: 'center',
             },
+            // make the dialog full screen and center the content inside vertically
           }}
         >
-          <DialogTitle className='mb-5'>
-            <Typography variant='h3' className='text-xl font-semibold'>
-              {renderTitle()}
-            </Typography>
-            <Typography className='mt-2 text-sm font-medium'>
-              {renderDesc()}
-            </Typography>
-            <IconButton
-              aria-label='close'
-              onClick={handleClose}
-              sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                color: theme => theme.palette.grey[500],
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </DialogTitle>
-          <DialogContent className='w-full'>
-            <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
-            <AuthInputs />
-          </DialogContent>
+          <div className='flex-center flex-col h-fit'>
+            <DialogTitle className='mb-4'>
+              <Typography variant='h4' className='text-xl font-medium'>
+                {renderTitle()}
+              </Typography>
+              <Typography className='mt-2 text-xs font-noto'>
+                {renderDesc()}
+              </Typography>
+              <IconButton
+                aria-label='close'
+                onClick={handleClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: theme => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle>
+            <DialogContent className='w-full'>
+              <AuthInputs />
+            </DialogContent>
+          </div>
         </Dialog>
       </div>
     </div>

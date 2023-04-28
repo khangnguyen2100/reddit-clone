@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';
 
 import { authModalState } from 'src/atoms';
@@ -9,34 +9,32 @@ import { FIREBASE_ERRORS } from 'src/firebase/constants';
 
 import Input from './Input';
 
-const SignUp = () => {
+const ResetPassword = () => {
   const setAuthModal = useSetRecoilState(authModalState);
-  const [formError, setFormError] = useState<string>('');
-  const [loginForm, setSignUpForm] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-  const [createUserWithEmailAndPassword, , loading, firebaseError] =
-    useCreateUserWithEmailAndPassword(auth);
 
+  const [formError, setFormError] = useState<string>('');
+  const [isEmailSend, setIsEmailSend] = useState(false);
+  const [loginForm, setLoginForm] = useState({
+    email: '',
+  });
+  const [sendPasswordResetEmail, loading, firebaseError] =
+    useSendPasswordResetEmail(auth);
+  console.log('firebaseError:', firebaseError);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSignUpForm({
+    setLoginForm({
       ...loginForm,
       [e.target.name]: e.target.value,
     });
   };
-
   const handleRedirectLoginPage = () => {
-    setAuthModal({
-      open: true,
-      view: 'login',
-    });
+    setAuthModal(prev => ({ ...prev, view: 'login' }));
   };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password, confirmPassword } = loginForm;
-    if (!email || !password || !confirmPassword) {
+    setIsEmailSend(false);
+    const { email } = loginForm;
+    if (!email) {
       setFormError('Please fill all fields');
       return;
     }
@@ -49,16 +47,13 @@ const SignUp = () => {
       setFormError('Invalid email');
       return;
     }
-    if (password.length < 6 || password.length > 50) {
-      setFormError('Password must be between 6 and 50 characters');
-      return;
-    }
-    if (password !== confirmPassword) {
-      setFormError('Password does not match');
-      return;
-    }
     setFormError('');
-    createUserWithEmailAndPassword(email, password);
+    sendPasswordResetEmail(email);
+
+    setTimeout(() => {
+      // check if there is no error show message
+      if (!firebaseError) setIsEmailSend(true);
+    }, 1000);
   };
 
   return (
@@ -75,53 +70,39 @@ const SignUp = () => {
           value={loginForm.email}
           onChange={onChange}
         />
-        <Input
-          id='password'
-          name='password'
-          label='Password'
-          type='password'
-          value={loginForm.password}
-          onChange={onChange}
-        />
-        <Input
-          id='confirmPassword'
-          name='confirmPassword'
-          label='Confirm Password'
-          type='password'
-          value={loginForm.confirmPassword}
-          onChange={onChange}
-        />
         {/* error */}
-        <em className='text-red-500 text-sm text-center block'>
+        <em className='text-red-500 text-sm text-center block -mt-2'>
           {formError ||
             FIREBASE_ERRORS[
               firebaseError?.message as keyof typeof FIREBASE_ERRORS
             ]}
         </em>
-        {/* link */}
+        <em className='text-blue text-xs block -mt-3'>
+          {isEmailSend && 'Email sent successfully. Please check your inbox.'}
+        </em>
+
         <ButtonBg
-          background='orange'
           type='submit'
-          className='w-full flex justify-center py-4 mt-5'
           loading={loading}
+          background='orange'
+          className='w-full flex justify-center py-4'
         >
-          Sign Up
+          Reset Password
         </ButtonBg>
       </form>
-
       {/* link */}
       <div className='block text-sm my-4'>
-        Already a redditor?
+        Go back to
         <p
           onClick={handleRedirectLoginPage}
           className='underline inline cursor-pointer text-blue font-semibold'
         >
           {' '}
-          Log in
+          Log In
         </p>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default ResetPassword;
