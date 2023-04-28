@@ -1,6 +1,6 @@
-import React from 'react';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {
-  Avatar as Ava,
   Box,
   Divider,
   IconButton,
@@ -9,11 +9,12 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import React from 'react';
 import { useSignOut } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';
 
-import { auth } from 'src/firebase/clientApp';
 import { authModalState } from 'src/atoms';
+import { auth } from 'src/firebase/clientApp';
 const settings = ['Profile', 'Account', 'Dashboard'];
 
 const ToggleMenu = () => {
@@ -38,8 +39,12 @@ const ToggleMenu = () => {
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title='Open settings'>
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Ava alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+        <IconButton
+          className='flex items-center px-[15px] py-[6px] active:border-divider border border-transparent border-solid hover:border-divider rounded'
+          onClick={handleOpenUserMenu}
+          sx={{ p: 0 }}
+        >
+          <PersonOutlineIcon /> <ExpandMoreIcon />
         </IconButton>
       </Tooltip>
       <Menu

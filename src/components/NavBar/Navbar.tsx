@@ -8,9 +8,7 @@ const NavBar = () => {
   return (
     <Box className={'bg-sections-paper w-full'}>
       <Box
-        className={
-          'navbar flex items-center justify-between px-1 mx-auto max-w-large'
-        }
+        className={'flex items-center justify-between px-4 py-1 mx-auto w-full'}
       >
         <Logo />
         <SearchInput />

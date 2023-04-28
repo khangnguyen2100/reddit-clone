@@ -5,6 +5,7 @@ import { auth } from 'src/firebase/clientApp';
 
 import AuthActions from './AuthActions/AuthActions';
 import ToggleMenu from './ToggleMenu';
+import Icons from './Icons';
 
 const RightContent = () => {
   const [user] = useAuthState(auth);
@@ -12,6 +13,7 @@ const RightContent = () => {
   return (
     <div className='flex items-center gap-x-1'>
       {!user && <AuthActions />}
+      {user && <Icons />}
       <ToggleMenu />
     </div>
   );

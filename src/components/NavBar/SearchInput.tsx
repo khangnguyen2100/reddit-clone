@@ -4,14 +4,14 @@ import React from 'react';
 
 const SearchInput = () => {
   return (
-    <Box sx={{ maxWidth: '404px', width: '100%' }}>
+    <Box sx={{ maxWidth: '46.7%', width: '100%' }}>
       <TextField
         id='search-input'
         placeholder='Search Reddit'
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
-              <SearchSharp sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+              <SearchSharp sx={{ color: 'action.active', my: 0.5 }} />
             </InputAdornment>
           ),
         }}
@@ -24,6 +24,9 @@ const SearchInput = () => {
             '& fieldset': {
               borderRadius: '30px',
               fontSize: '1.4rem',
+            },
+            '& .MuiInputBase-input': {
+              fontSize: '14px',
             },
             '&:hover fieldset': {
               borderColor: 'secondary.main',
