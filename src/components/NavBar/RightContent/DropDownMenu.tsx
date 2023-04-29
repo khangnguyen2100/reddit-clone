@@ -48,12 +48,12 @@ const DropDownMenu = () => {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title='Open settings'>
         <IconButton
-          className='flex items-center rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider'
+          className='std:[10px] flex items-center rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider std:py-[4px]'
           onClick={handleOpenUserMenu}
           sx={{ p: 0 }}
         >
           {user && (
-            <div className='flex-center mr-[4vw] gap-x-1'>
+            <div className='flex-center mr-[4vw] gap-x-1 std:mr-[2vw]'>
               {/* avatar */}
               <Image src={avatarSrc} width={31} height={31} alt='name' />
               {/* name */}

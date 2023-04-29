@@ -27,8 +27,8 @@ const IconBtn = ({ onClick, children, title }: IconBtnProps) => {
 };
 const Icons = () => {
   return (
-    <div className='flex-center gap-2'>
-      <div className='flex-center gap-2 mdd:hidden'>
+    <div className='flex-center gap-2 std:gap-1'>
+      <div className='flex-center gap-2 mdd:hidden std:gap-1'>
         <IconBtn title='Popular'>
           <BsArrowUpRightCircle color='typo-secondary' fontSize={20} />
         </IconBtn>
@@ -41,7 +41,7 @@ const Icons = () => {
         <Divider
           variant='middle'
           orientation='vertical'
-          className='h-7 border border-gray-50'
+          className='h-7 border border-gray-200'
         />
       </div>
       <IconBtn title='Chats'>
