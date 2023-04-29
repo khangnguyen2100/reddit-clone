@@ -3,7 +3,7 @@ import { Box, InputAdornment, TextField } from '@mui/material';
 import type { User } from 'firebase/auth';
 import React from 'react';
 type SearchInputType = {
-  user: User;
+  user?: User | null;
 };
 const SearchInput = ({ user }: SearchInputType) => {
   return (
