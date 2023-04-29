@@ -19,7 +19,6 @@ const ResetPassword = () => {
   });
   const [sendPasswordResetEmail, loading, firebaseError] =
     useSendPasswordResetEmail(auth);
-  console.log('firebaseError:', firebaseError);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginForm({
       ...loginForm,

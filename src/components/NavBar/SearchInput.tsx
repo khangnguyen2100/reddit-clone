@@ -1,10 +1,13 @@
 import { SearchSharp } from '@mui/icons-material';
 import { Box, InputAdornment, TextField } from '@mui/material';
+import type { User } from 'firebase/auth';
 import React from 'react';
-
-const SearchInput = () => {
+type SearchInputType = {
+  user: User;
+};
+const SearchInput = ({ user }: SearchInputType) => {
   return (
-    <Box sx={{ maxWidth: '46.7%', width: '100%' }}>
+    <Box sx={{ maxWidth: user ? '34%' : '46.7%', width: '100%' }}>
       <TextField
         id='search-input'
         placeholder='Search Reddit'
