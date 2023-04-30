@@ -3,9 +3,9 @@ import { useRecoilValue } from 'recoil';
 
 import { authModalState } from 'src/atoms';
 
-import Login from './Login';
-import SignUp from './SignUp';
-import ResetPassword from './ResetPassword';
+import Login from '../../../Modal/Auth/Login';
+import SignUp from '../../../Modal/Auth/SignUp';
+import ResetPassword from '../../../Modal/Auth/ResetPassword';
 
 const AuthInputs = () => {
   const authState = useRecoilValue(authModalState);

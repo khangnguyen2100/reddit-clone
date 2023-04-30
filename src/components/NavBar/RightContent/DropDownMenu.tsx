@@ -18,6 +18,7 @@ import { CgProfile } from 'react-icons/cg';
 import { FiLogOut, FiLogIn } from 'react-icons/fi';
 import { IoSparkles } from 'react-icons/io5';
 import { useSetRecoilState, useRecoilState } from 'recoil';
+import clsx from 'clsx';
 
 import { authModalState, uiSettingState } from 'src/atoms';
 import { auth } from 'src/firebase/clientApp';
@@ -48,7 +49,10 @@ const DropDownMenu = () => {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title='Open settings'>
         <IconButton
-          className='std:[10px] flex items-center rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider std:py-[4px]'
+          className={clsx(
+            'std:[10px] flex items-center rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider std:py-[4px]',
+            Boolean(anchorElUser) && '!border-divider',
+          )}
           onClick={handleOpenUserMenu}
           sx={{ p: 0 }}
         >
@@ -81,7 +85,7 @@ const DropDownMenu = () => {
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: '45px' }}
+        sx={{ mt: '35px' }}
         id='menu-appbar'
         anchorEl={anchorElUser}
         anchorOrigin={{
