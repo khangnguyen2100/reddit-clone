@@ -1,18 +1,17 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Box,
-  Divider,
   Icon,
   IconButton,
   Menu,
-  MenuItem,
   Tooltip,
   Typography,
 } from '@mui/material';
+import clsx from 'clsx';
 import React from 'react';
 import { TiHome } from 'react-icons/ti';
-import { CgProfile } from 'react-icons/cg';
-import clsx from 'clsx';
+
+import Communities from './Communities';
 
 const Directory = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -71,7 +70,7 @@ const Directory = () => {
           },
         }}
       >
-        <MenuItem className='w-full'>
+        {/* <MenuItem className='w-full'>
           <CgProfile className='mr-[10px] text-typo-primary' fontSize={20} />
           <Typography
             className='font-medium text-typo-primary'
@@ -79,8 +78,8 @@ const Directory = () => {
           >
             Profile
           </Typography>
-        </MenuItem>
-        <Divider />
+        </MenuItem> */}
+        <Communities />
       </Menu>
     </Box>
   );
