@@ -3,10 +3,9 @@ import { GetServerSidePropsContext } from 'next';
 import React from 'react';
 import safeJsonStringify from 'safe-json-stringify';
 
-import NotFound from 'src/components/community/NotFound';
 import { Community } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
-import Header from 'src/components/community/Header';
+import { Header, NotFound, CreatePostLink } from 'src/components/community';
 import PageContent from 'src/components/Layout/PageContent';
 type CommunityPageProps = {
   communityData: Community;
@@ -21,16 +20,8 @@ const CommunityPage = ({ communityData }: CommunityPageProps) => {
       <Header data={communityData} />
       <PageContent>
         <>
-          <h1>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error,
-            non.
-          </h1>
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-            tenetur commodi inventore quaerat vero maxime atque excepturi
-            molestias quibusdam nostrum, blanditiis neque, aut praesentium
-            tempore. Neque impedit cumque quaerat ad?
-          </div>
+          <CreatePostLink data={communityData} />
+          <div>tempore. Neque impedit cumque quaerat ad?</div>
         </>
         <>
           <h2>
