@@ -20,14 +20,15 @@ import {
   Typography,
 } from '@mui/material';
 import clsx from 'clsx';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { BsFillEyeFill, BsFillPersonFill } from 'react-icons/bs';
 import { HiLockClosed } from 'react-icons/hi';
 
 import { ButtonBg } from 'src/components/common';
-import { db } from 'src/firebase/clientApp';
+import { auth, db } from 'src/firebase/clientApp';
 
 type Props = {
   open: boolean;
@@ -62,13 +63,16 @@ const communityType: CommunityType[] = [
 ];
 const CreateCommunities = (props: Props) => {
   const { open, setOpen } = props;
-  const totalCharactersRemaining = 21;
+  const [user] = useAuthState(auth);
   const [communityName, setCommunityName] = useState<string>('');
+  const totalCharactersRemaining = 21;
   const [charactersRemaining, setCharactersRemaining] = useState(
     totalCharactersRemaining,
   );
   const [communityTypeValue, setCommunityTypeValue] = useState('public');
+  const [isAdultContent, setIsAdultContent] = useState(false);
   const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleClose = () => {
     setOpen(false);
   };
@@ -76,29 +80,48 @@ const CreateCommunities = (props: Props) => {
     if (e.target.value.length > totalCharactersRemaining) return;
     setCommunityName(e.target.value);
     setCharactersRemaining(totalCharactersRemaining - e.target.value.length);
-  };
-  const handleCreateCommunity = async () => {
     // check if community name is have special characters
-    const regex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    if (!regex.test(communityName)) {
+    const regex = /^[a-zA-Z0-9_]*$/;
+    if (!regex.test(e.target.value)) {
       setError(
         'Community names can only contain letters, numbers, or underscores',
       );
       return;
     }
     // check if community name is empty
-    if (communityName.length === 0) {
+    if (e.target.value.length === 0) {
       setError('Community name cannot be empty');
       return;
     }
     // check if community name is less than 3 characters
-    if (communityName.length < 3 || communityName.length > 21) {
+    if (e.target.value.length < 3 || e.target.value.length > 21) {
       setError('Community name must be between 3–21 characters');
       return;
     }
-    // check if community name is already taken
-    const communityDocRef = doc(db, 'communities', communityName);
-    const communityDoc = await getDoc(communityDocRef);
+    setError('');
+  };
+  const handleCreateCommunity = async () => {
+    setIsLoading(true);
+    try {
+      // check if community name is already taken
+      const communityDocRef = doc(db, 'communities', communityName);
+      const communityDoc = await getDoc(communityDocRef);
+      if (communityDoc.exists()) {
+        throw new Error(`Sorry, r/${communityName} is taken. Try another.`);
+      }
+      // create community
+      await setDoc(communityDocRef, {
+        creatorId: user?.uid,
+        createAt: serverTimestamp(),
+        numberOfMembers: 1,
+        privacyType: communityTypeValue,
+        adultContent: isAdultContent,
+      });
+    } catch (error: any) {
+      console.log('error:', error.message);
+      setError(error.message);
+    }
+    setIsLoading(false);
   };
   return (
     <Dialog
@@ -181,6 +204,9 @@ const CreateCommunities = (props: Props) => {
             {/* Community names must be between 3–21 characters, and can only contain letters, numbers, or underscores. */}
             {charactersRemaining} Characters remaining
           </Typography>
+          <Typography className={'mt-2 block text-xs text-red-500'}>
+            {error}
+          </Typography>
         </div>
         {/* community type */}
         <FormControl className='mb-12 mt-8'>
@@ -227,7 +253,9 @@ const CreateCommunities = (props: Props) => {
           </FormLabel>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox />}
+              control={
+                <Checkbox onChange={e => setIsAdultContent(e.target.checked)} />
+              }
               label={
                 <div className='flex items-center gap-x-2'>
                   <Typography className='bg-red-400 px-1  py-[2px] text-xs font-medium text-white'>
@@ -247,6 +275,7 @@ const CreateCommunities = (props: Props) => {
           className='!bg-transparent px-3 !text-blue'
           outline
           background='blue'
+          onClick={() => setOpen(false)}
         >
           Cancel
         </ButtonBg>
@@ -254,6 +283,8 @@ const CreateCommunities = (props: Props) => {
           className='px-3'
           background='blue'
           onClick={handleCreateCommunity}
+          loading={isLoading}
+          disabled={Boolean(error)}
         >
           Create Community
         </ButtonBg>
