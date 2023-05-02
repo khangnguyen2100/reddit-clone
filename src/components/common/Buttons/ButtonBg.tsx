@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-
+import Link from 'next/link';
 type Props = {
   color: 'orange' | 'blue';
   outline?: boolean;
@@ -12,6 +12,7 @@ type Props = {
   type?: 'submit' | 'button';
   disabled?: boolean;
   animation?: boolean;
+  href?: string;
 };
 
 const ButtonBg = (props: Props) => {
@@ -25,6 +26,7 @@ const ButtonBg = (props: Props) => {
     loading = false,
     disabled = false,
     animation = false,
+    href = '',
   } = props;
   return (
     <LoadingButton
@@ -35,7 +37,7 @@ const ButtonBg = (props: Props) => {
       variant='contained'
       onClick={onClick}
       className={clsx(
-        'h-fit min-h-fit rounded-3xl border-[1px] border-solid px-10 py-2 font-semibold leading-none !shadow-none transition-all duration-300 ease-in-out active:scale-[1.05]',
+        'h-fit min-h-fit rounded-3xl border-[1px] border-solid px-4 py-2 font-semibold leading-none !shadow-none transition-all duration-300 ease-in-out active:scale-[1.05]',
         // have bg
         color === 'orange' && !outline
           ? 'border-oran !bg-oran text-white hover:brightness-125'
@@ -55,7 +57,7 @@ const ButtonBg = (props: Props) => {
         className,
       )}
     >
-      {children}
+      {href ? <Link href={href}>{children}</Link> : children}
     </LoadingButton>
   );
 };

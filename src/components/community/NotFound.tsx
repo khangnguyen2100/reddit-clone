@@ -2,11 +2,9 @@ import React from 'react';
 
 import { ButtonBg } from '../common';
 
-type Props = {};
-
-const NotFound = (props: Props) => {
+const NotFound = () => {
   return (
-    <div className='flex-center flex-col gap-y-4 text-center font-ibm font-medium text-typo-primary '>
+    <div className='flex-center mt-[15vw] flex-col gap-y-4 text-center font-ibm font-medium text-typo-primary '>
       <h3 className='text-lg'>
         Sorry, there aren’t any communities on Reddit with that name.
       </h3>
@@ -17,7 +15,9 @@ const NotFound = (props: Props) => {
         <ButtonBg color='blue' outline>
           Create Community
         </ButtonBg>
-        <ButtonBg color='blue'>Create Community</ButtonBg>
+        <ButtonBg href='/' color='blue'>
+          Create Community
+        </ButtonBg>
       </div>
     </div>
   );

@@ -64,6 +64,7 @@ const AuthActions = () => {
           onClick={() => handleClickOpen({ open: true, view: 'login' })}
           color='orange'
           animation
+          className='!px-10'
         >
           Log in
         </ButtonBg>
@@ -71,6 +72,7 @@ const AuthActions = () => {
           outline
           color='blue'
           animation
+          className='!px-10'
           onClick={() => handleClickOpen({ open: true, view: 'signup' })}
         >
           Sign Up

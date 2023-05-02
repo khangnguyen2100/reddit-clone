@@ -284,16 +284,10 @@ const CreateCommunities = (props: Props) => {
         </FormControl>
       </DialogContent>
       <DialogActions className='bg-gray-200 py-4'>
-        <ButtonBg
-          className='!bg-transparent px-3 !text-blue'
-          outline
-          color='blue'
-          onClick={() => setOpen(false)}
-        >
+        <ButtonBg outline color='blue' onClick={() => setOpen(false)}>
           Cancel
         </ButtonBg>
         <ButtonBg
-          className='px-3'
           color='blue'
           onClick={handleCreateCommunity}
           loading={isLoading}
