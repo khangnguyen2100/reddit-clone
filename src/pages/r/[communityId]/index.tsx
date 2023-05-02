@@ -4,17 +4,43 @@ import React from 'react';
 import safeJsonStringify from 'safe-json-stringify';
 
 import NotFound from 'src/components/community/NotFound';
-import { Communities } from 'src/atoms';
+import { Community } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
+import Header from 'src/components/community/Header';
+import PageContent from 'src/components/Layout/PageContent';
 type CommunityPageProps = {
-  communityData: Communities;
+  communityData: Community;
 };
 
 const CommunityPage = ({ communityData }: CommunityPageProps) => {
   if (!communityData) {
     return <NotFound />;
   }
-  return <div>CommunityPage {communityData.id}</div>;
+  return (
+    <>
+      <Header data={communityData} />
+      <PageContent>
+        <>
+          <h1>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error,
+            non.
+          </h1>
+          <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+            tenetur commodi inventore quaerat vero maxime atque excepturi
+            molestias quibusdam nostrum, blanditiis neque, aut praesentium
+            tempore. Neque impedit cumque quaerat ad?
+          </div>
+        </>
+        <>
+          <h2>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nihil
+            consectetur commodi fuga totam officia?
+          </h2>
+        </>
+      </PageContent>
+    </>
+  );
 };
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // get community data and pass it to client
