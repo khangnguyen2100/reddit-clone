@@ -40,7 +40,7 @@ module.exports = {
       },
       maxWidth: {
         small: '640px',
-        medium: '977px',
+        medium: '976px',
         large: '1364px',
       },
       colors: {
