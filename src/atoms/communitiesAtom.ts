@@ -1,7 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 import { atom } from 'recoil';
 
-export interface Communities {
+export interface Community {
   id: string;
   creatorId: string;
   numberOfMembers: number;
@@ -10,13 +10,28 @@ export interface Communities {
   createAt?: Timestamp;
   imageURL?: string;
 }
-export interface CommunityModalState {
+interface CommunityModalState {
   open: boolean;
 }
-const defaultState: CommunityModalState = {
+const defaultModalState: CommunityModalState = {
   open: false,
 };
 export const communityModalState = atom<CommunityModalState>({
   key: 'communityModalState',
+  default: defaultModalState,
+});
+export interface CommunitySnippet {
+  communityId: string;
+  isModerator?: boolean;
+  imageURL?: string;
+}
+interface CommunityState {
+  mySnippets?: CommunitySnippet[];
+}
+const defaultState: CommunityState = {
+  mySnippets: [],
+};
+export const communityState = atom<CommunityState>({
+  key: 'communityState',
   default: defaultState,
 });
