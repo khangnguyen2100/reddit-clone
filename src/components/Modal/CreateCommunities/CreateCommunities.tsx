@@ -287,14 +287,14 @@ const CreateCommunities = (props: Props) => {
         <ButtonBg
           className='!bg-transparent px-3 !text-blue'
           outline
-          background='blue'
+          color='blue'
           onClick={() => setOpen(false)}
         >
           Cancel
         </ButtonBg>
         <ButtonBg
           className='px-3'
-          background='blue'
+          color='blue'
           onClick={handleCreateCommunity}
           loading={isLoading}
           disabled={Boolean(error)}

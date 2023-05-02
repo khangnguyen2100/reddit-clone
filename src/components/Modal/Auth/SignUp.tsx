@@ -100,7 +100,8 @@ const SignUp = () => {
         </em>
         {/* link */}
         <ButtonBg
-          background='orange'
+          color='orange'
+          animation
           type='submit'
           className='mt-5 flex w-full justify-center py-4'
           loading={loading}

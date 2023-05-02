@@ -83,7 +83,8 @@ const ResetPassword = () => {
         <ButtonBg
           type='submit'
           loading={loading}
-          background='orange'
+          color='orange'
+          animation
           className='flex w-full justify-center py-4'
         >
           Reset Password

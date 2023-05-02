@@ -62,13 +62,15 @@ const AuthActions = () => {
       <div className='flex items-center gap-x-2'>
         <ButtonBg
           onClick={() => handleClickOpen({ open: true, view: 'login' })}
-          background='orange'
+          color='orange'
+          animation
         >
           Log in
         </ButtonBg>
         <ButtonBg
           outline
-          background='blue'
+          color='blue'
+          animation
           onClick={() => handleClickOpen({ open: true, view: 'signup' })}
         >
           Sign Up

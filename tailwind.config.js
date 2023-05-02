@@ -46,7 +46,8 @@ module.exports = {
       colors: {
         oran: 'hsl(16, 100%, 54%)',
         oran_hover: 'hsl(16, 100%, 64%)',
-        blue: '#0272c4',
+        blue: 'hsl(205, 98%, 39%)',
+        blue_hover: 'hsl(205, 98%, 19%)',
         divider: '#cccccc',
         typo: {
           primary: '#222222',
