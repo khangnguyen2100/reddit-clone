@@ -10,6 +10,7 @@ type Props = {
   onClick?: () => void;
   loading?: boolean;
   type?: 'submit' | 'button';
+  disabled?: boolean;
 };
 
 const ButtonBg = (props: Props) => {
@@ -21,12 +22,14 @@ const ButtonBg = (props: Props) => {
     type = 'button',
     onClick,
     loading = false,
+    disabled = false,
   } = props;
   return (
     <LoadingButton
       type={type}
       size='small'
       loading={loading}
+      disabled={disabled}
       variant='contained'
       onClick={onClick}
       className={clsx(
