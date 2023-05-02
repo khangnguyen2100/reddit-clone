@@ -17,16 +17,17 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
 import { FiLogOut, FiLogIn } from 'react-icons/fi';
 import { IoSparkles } from 'react-icons/io5';
-import { useSetRecoilState, useRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState, useResetRecoilState } from 'recoil';
 import clsx from 'clsx';
 
-import { authModalState, uiSettingState } from 'src/atoms';
+import { authModalState, communityState, uiSettingState } from 'src/atoms';
 import { auth } from 'src/firebase/clientApp';
 import avatarSrc from 'public/images/avatar.png';
 const DropDownMenu = () => {
   const setAuthModal = useSetRecoilState(authModalState);
   const [themeMode, setThemeMode] = useRecoilState(uiSettingState);
   const [user] = useAuthState(auth);
+  const resetCommunityState = useResetRecoilState(communityState);
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
@@ -44,6 +45,7 @@ const DropDownMenu = () => {
     signOut();
     handleCloseUserMenu();
     setAuthModal(prev => ({ ...prev, open: false }));
+    resetCommunityState();
   };
   return (
     <Box sx={{ flexGrow: 0 }}>
