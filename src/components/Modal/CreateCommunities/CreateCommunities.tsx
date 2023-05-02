@@ -32,7 +32,7 @@ import { auth, db } from 'src/firebase/clientApp';
 
 type Props = {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleCloseModal: () => void;
 };
 type CommunityType = {
   name: string;
@@ -62,7 +62,7 @@ const communityType: CommunityType[] = [
   },
 ];
 const CreateCommunities = (props: Props) => {
-  const { open, setOpen } = props;
+  const { open, handleCloseModal } = props;
   const [user] = useAuthState(auth);
   const [communityName, setCommunityName] = useState<string>('');
   const totalCharactersRemaining = 21;
@@ -73,9 +73,6 @@ const CreateCommunities = (props: Props) => {
   const [isAdultContent, setIsAdultContent] = useState(false);
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > totalCharactersRemaining) return;
     setCommunityName(e.target.value);
@@ -140,7 +137,7 @@ const CreateCommunities = (props: Props) => {
     <Dialog
       open={open}
       keepMounted
-      onClose={handleClose}
+      onClose={handleCloseModal}
       fullWidth
       maxWidth='sm'
       classes={{
@@ -153,7 +150,7 @@ const CreateCommunities = (props: Props) => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handleClose}
+          onClick={handleCloseModal}
           sx={{
             color: theme => theme.palette.grey[500],
             width: 'fit-content',
@@ -284,7 +281,7 @@ const CreateCommunities = (props: Props) => {
         </FormControl>
       </DialogContent>
       <DialogActions className='bg-gray-200 py-4'>
-        <ButtonBg outline color='blue' onClick={() => setOpen(false)}>
+        <ButtonBg outline color='blue' onClick={handleCloseModal}>
           Cancel
         </ButtonBg>
         <ButtonBg
