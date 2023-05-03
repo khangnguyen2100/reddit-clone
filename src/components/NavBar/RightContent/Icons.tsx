@@ -16,7 +16,7 @@ const IconBtn = ({ onClick, children, title }: IconBtnProps) => {
   return (
     <Tooltip title={title}>
       <IconButton
-        className='flex items-center justify-center rounded border border-solid border-transparent p-[6px] hover:border-divider active:border-divider'
+        className='flex items-center justify-center rounded border border-solid border-transparent p-[4px] hover:border-divider active:border-divider'
         onClick={onClick}
         sx={{ p: 0 }}
       >
@@ -27,8 +27,8 @@ const IconBtn = ({ onClick, children, title }: IconBtnProps) => {
 };
 const Icons = () => {
   return (
-    <div className='flex-center gap-2 std:gap-1'>
-      <div className='flex-center gap-2 mdd:hidden std:gap-1'>
+    <div className='flex-center gap-x-2 std:gap-x-1'>
+      <div className='flex-center gap-x-2 mdd:hidden std:gap-x-1'>
         <IconBtn title='Popular'>
           <BsArrowUpRightCircle color='typo-secondary' fontSize={20} />
         </IconBtn>
@@ -41,7 +41,7 @@ const Icons = () => {
         <Divider
           variant='middle'
           orientation='vertical'
-          className='h-7 border border-gray-200'
+          className='h-6 border border-gray-200'
         />
       </div>
       <IconBtn title='Chats'>

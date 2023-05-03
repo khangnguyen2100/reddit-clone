@@ -2,10 +2,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import {
   Dialog,
   DialogContent,
-  DialogTitle,
   IconButton,
   Slide,
-  Typography,
+  Typography
 } from '@mui/material';
 import type { TransitionProps } from '@mui/material/transitions';
 import React, { useEffect } from 'react';
@@ -99,7 +98,7 @@ const AuthActions = () => {
           }}
         >
           <div className='flex-center h-fit flex-col'>
-            <DialogTitle className='mb-4'>
+            <div className='mb-4'>
               <Typography variant='h4' className='text-xl font-medium'>
                 {renderTitle()}
               </Typography>
@@ -118,7 +117,7 @@ const AuthActions = () => {
               >
                 <CloseIcon />
               </IconButton>
-            </DialogTitle>
+            </div>
             <DialogContent className='w-full'>
               <AuthInputs />
             </DialogContent>

@@ -18,8 +18,8 @@ const Header = (props: Props) => {
     communityStateValue.mySnippets?.find(item => item.communityId === data.id),
   );
   return (
-    <div className='flex h-[146px] w-full flex-col'>
-      <div className='h-1/2 bg-[#33a8ff]' />
+    <div className='flex h-[181px] w-full flex-col'>
+      <div className='h-[80px] bg-[#33a8ff]' />
       <div className='flex grow justify-center bg-white'>
         <div className='flex w-full max-w-medium'>
           {data?.imageURL ? (

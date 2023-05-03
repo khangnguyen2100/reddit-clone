@@ -52,7 +52,7 @@ const DropDownMenu = () => {
       <Tooltip title='Open settings'>
         <IconButton
           className={clsx(
-            'std:[10px] flex items-center rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider std:py-[4px]',
+            'flex items-center rounded border border-solid border-transparent px-[15px] py-[2px] hover:border-divider active:border-divider std:px-[10px]',
             Boolean(anchorElUser) && '!border-divider',
           )}
           onClick={handleOpenUserMenu}
@@ -103,7 +103,7 @@ const DropDownMenu = () => {
         onClose={handleCloseUserMenu}
       >
         {user && (
-          <>
+          <div>
             <MenuItem>
               <CgProfile
                 className='mr-[10px] text-typo-primary'
@@ -148,7 +148,7 @@ const DropDownMenu = () => {
                 Log Out
               </Typography>
             </MenuItem>
-          </>
+          </div>
         )}
         {!user && (
           <MenuItem onClick={() => setAuthModal({ open: true, view: 'login' })}>

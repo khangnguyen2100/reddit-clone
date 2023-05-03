@@ -7,9 +7,9 @@ import redditText from '/public/images/redditText.svg';
 
 const Logo = () => {
   return (
-    <Box component={Link} href={'/'} className='flex items-center'>
+    <Box component={Link} href={'/'} className='flex items-center gap-x-2'>
       <Image src={redditFace} alt='logo' width={32} />
-      <Image src={redditText} alt='logo' width={57} />
+      <Image src={redditText} alt='logo' width={57} className='mdd:hidden' />
     </Box>
   );
 };
