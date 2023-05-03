@@ -1,12 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {
-  Box,
-  Icon,
-  IconButton,
-  Menu,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Box, IconButton, Menu, Tooltip, Typography } from '@mui/material';
 import clsx from 'clsx';
 import React from 'react';
 import { TiHome } from 'react-icons/ti';
@@ -36,7 +29,7 @@ const Directory = () => {
           onClick={handleOpenUserMenu}
           sx={{ p: 0 }}
         >
-          <Icon className='flex flex-1 items-center gap-x-1' component={Box}>
+          <Box className='flex flex-1 items-center gap-x-1'>
             <TiHome className='mr-[10px] text-typo-primary' fontSize={20} />
             <Typography
               variant='h4'
@@ -44,7 +37,7 @@ const Directory = () => {
             >
               Home
             </Typography>
-          </Icon>
+          </Box>
           <ExpandMoreIcon />
         </IconButton>
       </Tooltip>

@@ -38,6 +38,8 @@ const ButtonBg = (props: Props) => {
       onClick={onClick}
       className={clsx(
         'h-fit min-h-fit rounded-3xl border-[1px] border-solid px-4 py-2 font-semibold leading-none !shadow-none transition-all duration-300 ease-in-out active:scale-[1.05]',
+        disabled &&
+          '!cursor-not-allowed border-gray-400 !bg-gray-400 !text-white',
         // have bg
         color === 'orange' && !outline
           ? 'border-oran !bg-oran text-white hover:brightness-125'

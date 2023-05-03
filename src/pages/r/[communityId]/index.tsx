@@ -7,6 +7,7 @@ import { Community } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
 import { Header, NotFound, CreatePostLink } from 'src/components/community';
 import PageContent from 'src/components/Layout/PageContent';
+import Posts from 'src/components/Posts/Posts';
 type CommunityPageProps = {
   communityData: Community;
 };
@@ -21,7 +22,7 @@ const CommunityPage = ({ communityData }: CommunityPageProps) => {
       <PageContent>
         <>
           <CreatePostLink data={communityData} />
-          <div>tempore. Neque impedit cumque quaerat ad?</div>
+          <Posts communityData={communityData} />
         </>
         <>
           <h2>

@@ -1,17 +1,26 @@
+import { Icon, IconButton, TextField, Tooltip } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
+import { useRouter } from 'next/router';
 import { BsLink45Deg } from 'react-icons/bs';
 import { FaReddit } from 'react-icons/fa';
 import { IoImageOutline } from 'react-icons/io5';
-import { Icon, IconButton, TextField, Tooltip } from '@mui/material';
 
 import { Community } from 'src/atoms';
+import useCheckSigned from 'src/hooks/useCheckSigned';
 type Props = {
   data: Community;
 };
 const CreatePostLink = ({ data }: Props) => {
+  const { userSigned } = useCheckSigned();
+  const router = useRouter();
+  const handleNavigateToSubmit = () => {
+    if (userSigned()) {
+      router.push(`/r/${data.id}/submit`);
+    }
+  };
   return (
     <div className='flex-center relative w-full gap-x-2 rounded-sm border border-divider bg-sections-paper p-[9px]'>
+      {/* avatar */}
       <div className='absolute left-1 top-2'>
         {data?.imageURL ? (
           <Image
@@ -27,7 +36,8 @@ const CreatePostLink = ({ data }: Props) => {
           />
         )}
       </div>
-      <div className='ml-[50px] grow'>
+      {/* input */}
+      <div className='ml-[50px] grow' onClick={handleNavigateToSubmit}>
         <TextField
           placeholder='Create Post'
           variant='outlined'
@@ -59,6 +69,7 @@ const CreatePostLink = ({ data }: Props) => {
           }}
         />
       </div>
+      {/* actions */}
       <div className='flex-center'>
         <Tooltip title={'Create Media Post'}>
           <IconButton
