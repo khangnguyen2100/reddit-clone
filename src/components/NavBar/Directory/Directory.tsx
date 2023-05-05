@@ -1,5 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, IconButton, Menu, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Menu, Typography, Icon } from '@mui/material';
 import clsx from 'clsx';
 import React from 'react';
 import { TiHome } from 'react-icons/ti';
@@ -20,27 +20,28 @@ const Directory = () => {
   };
   return (
     <Box className='relative w-[17vw] mdd:w-auto' sx={{ flexGrow: 0 }}>
-      <Tooltip title=''>
-        <IconButton
-          className={clsx(
-            'flex w-full items-center justify-between rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider',
-            Boolean(anchorElUser) && '!border-divider',
-          )}
-          onClick={handleOpenUserMenu}
-          sx={{ p: 0 }}
-        >
-          <Box className='flex flex-1 items-center gap-x-1'>
-            <TiHome className='mr-[10px] text-typo-primary' fontSize={20} />
-            <Typography
-              variant='h4'
-              className='text-xs font-medium text-typo-primary'
-            >
-              Home
-            </Typography>
-          </Box>
-          <ExpandMoreIcon />
-        </IconButton>
-      </Tooltip>
+      <IconButton
+        className={clsx(
+          'flex w-full items-center justify-between rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider',
+          Boolean(anchorElUser) && '!border-divider',
+        )}
+        onClick={handleOpenUserMenu}
+        sx={{ p: 0 }}
+      >
+        <div className='flex flex-1 items-center gap-x-1'>
+          <Icon
+            component={TiHome}
+            className='mr-[10px] text-[20px] text-typo-primary'
+          />
+          <Typography
+            variant='h4'
+            className='text-xs font-medium text-typo-primary'
+          >
+            Home
+          </Typography>
+        </div>
+        <ExpandMoreIcon />
+      </IconButton>
       <Menu
         id='menu-appbar'
         anchorEl={anchorElUser}
