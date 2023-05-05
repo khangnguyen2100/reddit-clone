@@ -1,18 +1,17 @@
 import type { User } from 'firebase/auth';
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+} from 'firebase/firestore';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { BiPoll } from 'react-icons/bi';
 import { BsLink45Deg } from 'react-icons/bs';
 import { IoDocumentText, IoImage } from 'react-icons/io5';
-import {
-  Timestamp,
-  addDoc,
-  collection,
-  getDoc,
-  serverTimestamp,
-  updateDoc,
-} from 'firebase/firestore';
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
 import { Post } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';

@@ -2,6 +2,7 @@ import { CircularProgress, Icon, Stack } from '@mui/material';
 import clsx from 'clsx';
 import moment from 'moment';
 import Image from 'next/image';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsChat } from 'react-icons/bs';
@@ -29,13 +30,14 @@ type Props = {
 const PostItem = (props: Props) => {
   const { post, voteValue, isCreator, onSelectPost, onDeletePost, onVote } =
     props;
-  const [error, setError] = useState<string>('');
   const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
 
   const { ConfirmModal, confirmResult } = useConfirm({
     title: 'Delete Post',
     message: 'Are you sure you want to delete this post?',
   });
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleDelete = async () => {
     const ans = await confirmResult();
     if (ans) {
@@ -45,9 +47,9 @@ const PostItem = (props: Props) => {
         if (!success) {
           throw new Error('Something went wrong while deleting the post.');
         }
-        console.log('Delete Successfully!');
+        enqueueSnackbar('Delete Post Successfully!', { variant: 'success' });
       } catch (error: any) {
-        setError(error.message);
+        enqueueSnackbar(error.message, { variant: 'error' });
       }
       setLoadingDelete(false);
     }
@@ -131,6 +133,7 @@ const PostItem = (props: Props) => {
               )
             }
           </Stack>
+          {/* buttons */}
           <div className='mb-[2px] ml-1 flex gap-x-1 font-semibold text-typo-secondary'>
             {/* comment */}
             <div className='flex cursor-pointer rounded-sm px-3 py-2 text-center hover:bg-gray-200'>

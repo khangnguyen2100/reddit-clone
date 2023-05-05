@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
+import { SnackbarProvider } from 'notistack';
 
 import Layout from 'src/components/Layout/Layout';
 import createEmotionCache from 'src/createEmotionCache';
@@ -43,9 +44,11 @@ export default function MyApp(props: MyAppProps) {
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
         <ThemeProvider theme={theme}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <SnackbarProvider autoHideDuration={3000}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </SnackbarProvider>
         </ThemeProvider>
       </CacheProvider>
     </RecoilRoot>

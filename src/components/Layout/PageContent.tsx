@@ -7,7 +7,7 @@ const PageContent = ({ children }: Props) => {
   return (
     <div className='mx-auto flex w-full max-w-medium justify-center py-4'>
       {/* left */}
-      <div className='mr-3 flex w-full h-auto flex-col md:w-[65.57377049%] mdd:mr-0'>
+      <div className='mr-3 flex h-auto w-full flex-col md:w-[65.57377049%] mdd:mr-0'>
         {left}
       </div>
       {/* right */}

@@ -4,7 +4,7 @@ import {
   DialogContent,
   IconButton,
   Slide,
-  Typography
+  Typography,
 } from '@mui/material';
 import type { TransitionProps } from '@mui/material/transitions';
 import React, { useEffect } from 'react';
