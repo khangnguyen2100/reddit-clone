@@ -42,7 +42,6 @@ const Posts = (props: Props) => {
         ...prev,
         posts: postsData as Post[],
       }));
-      console.log('postsData:', postsData);
     } catch (error: any) {
       console.log('Error:', error.message);
     }
