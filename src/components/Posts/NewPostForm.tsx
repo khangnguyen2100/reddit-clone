@@ -93,7 +93,7 @@ const NewPostForm = ({ user }: NewPostFormProps) => {
       });
       setSelectedFile('');
       setLoading(false);
-      // router.back();
+      router.back();
     } catch (error) {
       console.log(`Error from handleCreatePost: ${error}`);
     }
