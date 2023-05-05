@@ -15,6 +15,7 @@ import { IoDocumentText, IoImage } from 'react-icons/io5';
 
 import { Post } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';
+import useSelectFile from 'src/hooks/useSelectFile';
 
 import { ImageUpload, TextInputs } from './PostsForm';
 import TabItem from './TabItem';
@@ -56,8 +57,7 @@ const NewPostForm = ({ user }: NewPostFormProps) => {
     body: '',
   });
   const [loading, setLoading] = useState<boolean>(false);
-
-  const [selectedFile, setSelectedFile] = useState<string>('');
+  const { selectedFile, setSelectedFile, onSelectedFile } = useSelectFile();
   const handleCreatePost = async () => {
     setLoading(true);
     const communityId = router.query.communityId as string;
@@ -97,17 +97,6 @@ const NewPostForm = ({ user }: NewPostFormProps) => {
       console.log(`Error from handleCreatePost: ${error}`);
     }
   };
-  const onSelectedImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
-    if (e.target.files?.[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    reader.onload = readerEvent => {
-      if (readerEvent.target?.result) {
-        setSelectedFile(readerEvent.target.result as string);
-      }
-    };
-  };
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setTextInputs(prev => ({ ...prev, [name]: value }));
@@ -138,7 +127,7 @@ const NewPostForm = ({ user }: NewPostFormProps) => {
         <ImageUpload
           selectedFile={selectedFile}
           setSelectedFile={setSelectedFile}
-          onSelectedImage={onSelectedImage}
+          onSelectedImage={onSelectedFile}
           setSelectedTab={setSelected}
         />
       )}
