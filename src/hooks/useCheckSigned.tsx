@@ -19,6 +19,7 @@ const useCheckSigned = () => {
   };
 
   return {
+    user,
     userSigned,
   };
 };
