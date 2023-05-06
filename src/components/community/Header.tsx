@@ -22,13 +22,15 @@ const Header = (props: Props) => {
       <div className='h-[80px] bg-[#33a8ff]' />
       <div className='flex grow justify-center bg-white'>
         <div className='flex w-full max-w-medium'>
-          {data?.imageURL ? (
-            <Image
-              src={data?.imageURL}
-              height={80}
-              width={80}
-              alt={`${data.id}-avatar`}
-            />
+          {communityStateValue.currentCommunity?.imageURL ? (
+            <div className='relative -top-3 h-20 w-20 overflow-hidden rounded-full border-[4px] border-solid border-white text-blue'>
+              <Image
+                src={communityStateValue.currentCommunity?.imageURL}
+                fill
+                alt={`${data.id}-avatar`}
+                className='rounded-full object-cover'
+              />
+            </div>
           ) : (
             <Icon
               component={FaReddit}

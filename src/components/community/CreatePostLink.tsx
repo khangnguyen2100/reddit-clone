@@ -22,7 +22,7 @@ const CreatePostLink = ({ data }: Props) => {
     <div className='flex-center relative w-full gap-x-2 rounded-sm border border-divider bg-sections-paper p-[9px]'>
       {/* avatar */}
       <div className='absolute left-1 top-2'>
-        {data?.imageURL ? (
+        {false ? (
           <Image
             src={data?.imageURL}
             height={50}
