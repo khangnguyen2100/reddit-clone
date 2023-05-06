@@ -3,6 +3,9 @@ import {
   doc,
   getDocs,
   increment,
+  orderBy,
+  query,
+  where,
   writeBatch,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
@@ -12,17 +15,21 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   Community,
   CommunitySnippet,
+  Post,
+  PostVotes,
   authModalState,
   communityState,
 } from 'src/atoms';
 import { auth, db } from 'src/firebase/clientApp';
+
+import usePosts from './usePosts';
 
 const useCommunityData = () => {
   const [communityStateValue, setCommunityStateValue] =
     useRecoilState(communityState);
   const [user] = useAuthState(auth);
   const setAuthModalState = useSetRecoilState(authModalState);
-
+  const { setPostStateValue } = usePosts();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -74,6 +81,10 @@ const useCommunityData = () => {
         communityId: communityData.id,
         imageURL: communityData.imageURL || '',
       };
+      const newCommunity: Community = {
+        ...communityData,
+        numberOfMembers: communityData.numberOfMembers + 1,
+      };
       batch.set(
         doc(db, `users/${user?.uid}/communitySnippets`, communityData.id),
         newSnippets,
@@ -89,6 +100,7 @@ const useCommunityData = () => {
       setCommunityStateValue(prev => ({
         ...prev,
         mySnippets: [...(prev.mySnippets || []), newSnippets],
+        currentCommunity: newCommunity,
       }));
     } catch (error: any) {
       setError(error.message);
@@ -107,6 +119,60 @@ const useCommunityData = () => {
       batch.update(doc(db, 'communities', communityId), {
         numberOfMembers: increment(-1),
       });
+
+      // get all postVotes
+      const postVotesDocs = await getDocs(
+        collection(db, `users/${user?.uid}/postVotes`),
+      );
+      const postVotesData = postVotesDocs.docs.map(doc => ({
+        ...doc.data(),
+      })) as PostVotes[];
+
+      // get all posts
+      const postsDocs = await getDocs(
+        query(
+          collection(db, 'posts'),
+          where('communityId', '==', communityId),
+          orderBy('createdAt', 'desc'),
+        ),
+      );
+      const postsData = postsDocs.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Post[];
+
+      // update voteCount in post
+      const postsUpdated = postsData.map(post => {
+        const postVoted = postVotesData.find(vote => vote.postId === post.id);
+        if (postVoted) {
+          // delete vote in post
+          post.voteCount -= postVoted.voteValue;
+          const postDocRef = doc(db, `posts/${post.id}`);
+          batch.update(postDocRef, {
+            voteCount: increment(-postVoted.voteValue),
+          });
+        }
+        return post;
+      });
+      // update state
+      setPostStateValue(prev => ({
+        ...prev,
+        posts: postsUpdated,
+        postVotes: [],
+      }));
+
+      // delete postVotes from user on firebase
+      postVotesData.forEach(vote => {
+        const postVoteDocRef = doc(
+          db,
+          `users/${user?.uid}/postVotes/${vote.id}`,
+        );
+        batch.delete(postVoteDocRef);
+      });
+      // // update amount member
+      // batch.update(doc(db, 'communities', communityId), {
+      //   numberOfMembers: increment(-1),
+      // });
       await batch.commit();
       // update state
       setCommunityStateValue(prev => ({
@@ -114,11 +180,21 @@ const useCommunityData = () => {
         mySnippets: prev.mySnippets?.filter(
           item => item.communityId !== communityId,
         ),
+        currentCommunity: {
+          ...prev.currentCommunity,
+          numberOfMembers: prev.currentCommunity?.numberOfMembers! - 1,
+        } as Community,
       }));
     } catch (error: any) {
       setError(error.message);
     }
     setLoading(false);
+  };
+  const isUserJoinedCommunity = (communityId: string) => {
+    if (!user) return false;
+    return communityStateValue.mySnippets?.some(
+      item => item.communityId === communityId,
+    );
   };
   useEffect(() => {
     // run after user change log-in/log-out
@@ -131,7 +207,13 @@ const useCommunityData = () => {
     getMySippets();
   }, [user]);
 
-  return { communityStateValue, toggleJoinOrLeaveCommunity, loading, error };
+  return {
+    communityStateValue,
+    toggleJoinOrLeaveCommunity,
+    loading,
+    error,
+    isUserJoinedCommunity,
+  };
 };
 
 export default useCommunityData;
