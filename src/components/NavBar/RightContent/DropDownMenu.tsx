@@ -45,7 +45,7 @@ const DropDownMenu = () => {
     signOut();
     handleCloseUserMenu();
     setAuthModal(prev => ({ ...prev, open: false }));
-    resetCommunityState();
+    // resetCommunityState();
   };
   return (
     <Box sx={{ flexGrow: 0 }}>

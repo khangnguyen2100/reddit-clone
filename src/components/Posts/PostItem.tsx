@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { CircularProgress, Icon, Stack } from '@mui/material';
 import clsx from 'clsx';
 import moment from 'moment';
@@ -15,14 +16,13 @@ import {
   IoBookmarkOutline,
 } from 'react-icons/io5';
 
-import { Post } from 'src/atoms';
+import { Post, communityState } from 'src/atoms';
 import useConfirm from 'src/hooks/useConfirm';
 type Props = {
   post: Post;
   isCreator: boolean;
   voteValue?: number;
-  onVote: () => {};
-  // eslint-disable-next-line no-unused-vars
+  onVote: (post: Post, vote: number, communityId: string) => {};
   onDeletePost: (post: Post) => Promise<boolean>;
   onSelectPost: () => void;
 };
@@ -70,7 +70,7 @@ const PostItem = (props: Props) => {
               'cursor-pointer rounded-sm p-[2px] text-[28px] hover:bg-gray-200',
               voteValue === 1 ? 'text-oran' : 'text-gray-400',
             )}
-            onClick={() => onVote()}
+            onClick={() => onVote(post, 1, post.communityId)}
           />
           <p
             className={clsx(
@@ -94,7 +94,7 @@ const PostItem = (props: Props) => {
               'cursor-pointer rounded-sm p-[2px] text-[28px] hover:bg-gray-200',
               voteValue === -1 ? 'text-blue' : 'text-gray-400',
             )}
-            onClick={() => onVote()}
+            onClick={() => onVote(post, -1, post.communityId)}
           />
         </div>
         <div className='flex w-full flex-col'>

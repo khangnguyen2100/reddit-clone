@@ -122,8 +122,13 @@ const useCommunityData = () => {
   };
   useEffect(() => {
     // run after user change log-in/log-out
-    if (user?.uid) getMySippets();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!user) {
+      setCommunityStateValue(prev => ({
+        ...prev,
+        mySnippets: [],
+      }));
+    }
+    getMySippets();
   }, [user]);
 
   return { communityStateValue, toggleJoinOrLeaveCommunity, loading, error };

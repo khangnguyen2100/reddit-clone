@@ -14,7 +14,7 @@ export type Post = {
   communityImageURL?: string;
   createdAt: Timestamp;
 };
-interface PostVotes {
+export interface PostVotes {
   id: string;
   postId: string;
   communityId: string;

@@ -63,7 +63,10 @@ const Posts = (props: Props) => {
               post={post}
               key={post.id}
               isCreator={post.creatorId === user?.uid}
-              voteValue={undefined}
+              voteValue={
+                postsStateValue.postVotes.find(item => item.postId === post.id)
+                  ?.voteValue
+              }
               onDeletePost={onDeletePost}
               onSelectPost={onSelectPost}
               onVote={onVote}
