@@ -67,6 +67,7 @@ const CreatePostLink = ({ data }: Props) => {
               },
             },
           }}
+          disabled
         />
       </div>
       {/* actions */}
