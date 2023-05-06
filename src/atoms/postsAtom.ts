@@ -14,16 +14,24 @@ export type Post = {
   communityImageURL?: string;
   createdAt: Timestamp;
 };
+interface PostVotes {
+  id: string;
+  postId: string;
+  communityId: string;
+  voteValue: number;
+}
 interface PostState {
   posts: Post[];
   selectedPost: Post | null;
+  postVotes: PostVotes[];
 }
 
-const defaultPostState: PostState = {
+const defaultPostsState: PostState = {
   posts: [],
   selectedPost: null,
+  postVotes: [],
 };
-export const postState = atom<PostState>({
-  key: 'postState',
-  default: defaultPostState,
+export const postsState = atom<PostState>({
+  key: 'postsState',
+  default: defaultPostsState,
 });

@@ -5,9 +5,16 @@ import { useRecoilState } from 'recoil';
 import { Post, postState } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';
 
+import useCheckUser from './useCheckUser';
+
 const usePosts = () => {
   const [postStateValue, setPostStateValue] = useRecoilState(postState);
-  const onVote = async () => {};
+  const { userSigned } = useCheckUser();
+  const onVote = async () => {
+    if (userSigned()) {
+      return;
+    }
+  };
   const onSelectPost = () => {};
   const onDeletePost = async (post: Post): Promise<boolean> => {
     // check post have image?
