@@ -33,11 +33,11 @@ const About = () => {
     if (!selectedFile) return;
     setUploadingImage(true);
     try {
-      const imageRef = ref(storage, `communities/${communityData.id}/image`);
+      const imageRef = ref(storage, `communities/${communityData?.id}/image`);
       await uploadString(imageRef, selectedFile, 'data_url');
       const downloadURL = await getDownloadURL(imageRef);
 
-      await updateDoc(doc(db, 'communities', communityData.id), {
+      await updateDoc(doc(db, 'communities', communityData?.id), {
         imageURL: downloadURL,
       });
       setCommunityValue(prev => ({
@@ -57,7 +57,7 @@ const About = () => {
     const userDocRef = doc(
       db,
       `users/${user?.uid!}/communitySnippets`,
-      communityData.id,
+      communityData?.id,
     );
     const userDoc = await getDoc(userDocRef);
     const userDocData = userDoc.data();
@@ -74,7 +74,7 @@ const About = () => {
       });
       return;
     }
-    router.push(`/r/${communityData.id}/submit`);
+    router.push(`/r/${communityData?.id}/submit`);
   };
   return (
     <div className='sticky top-3 '>
@@ -88,7 +88,7 @@ const About = () => {
           <div className='flex w-full text-xs font-bold'>
             <h4 className=' font-medium'>
               <span className='text-base font-bold'>
-                {communityData.numberOfMembers.toLocaleString()}
+                {communityData?.numberOfMembers.toLocaleString()}
               </span>{' '}
               Members
             </h4>
@@ -100,10 +100,10 @@ const About = () => {
               component={FaBirthdayCake}
               className='mr-4 text-[20px] text-blue mdd:mr-2'
             />
-            {communityData.createAt && (
+            {communityData?.createAt && (
               <p className='text-typo-secondary'>
                 Created{' '}
-                {moment(new Date(communityData.createAt.seconds * 1000)).format(
+                {moment(new Date(communityData?.createAt.seconds * 1000)).format(
                   'MMM DD, YYYY',
                 )}
               </p>
@@ -112,7 +112,7 @@ const About = () => {
           {/* create post button */}
           <Divider />
           <div
-            // href={`/r/${communityData.id}/submit`}
+            // href={`/r/${communityData?.id}/submit`}
             className='w-full'
             onClick={checkUserSigned}
           >
@@ -120,7 +120,7 @@ const About = () => {
               Create Post
             </ButtonBg>
           </div>
-          {user?.uid === communityData.creatorId && (
+          {user?.uid === communityData?.creatorId && (
             <>
               <Divider />
               <div className='flex flex-col gap-x-1'>
@@ -132,11 +132,11 @@ const About = () => {
                   >
                     Change Image
                   </p>
-                  {communityData.imageURL || selectedFile ? (
+                  {communityData?.imageURL || selectedFile ? (
                     <div className='flex-center relative h-10  w-10 overflow-hidden rounded-full'>
                       <Image
-                        src={selectedFile || communityData.imageURL!}
-                        alt={`${communityData.id}-avatar`}
+                        src={selectedFile || communityData?.imageURL!}
+                        alt={`${communityData?.id}-avatar`}
                         fill
                         className='rounded-full'
                       />
