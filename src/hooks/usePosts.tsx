@@ -20,9 +20,19 @@ import useCheckUser from './useCheckUser';
 const usePosts = () => {
   const [postsStateValue, setPostStateValue] = useRecoilState(postsState);
   const { user, userSigned } = useCheckUser();
+  const communityStateValue = useRecoilValue(communityState);
   const currentCommunity = useRecoilValue(communityState).currentCommunity;
   const onVote = async (post: Post, vote: number, communityId: string) => {
     // show log in if user not log in
+    const isJoined = communityStateValue.mySnippets?.some(
+      item => item.communityId === communityId,
+    );
+    if (!isJoined) {
+      enqueueSnackbar('You need to join community to vote', {
+        variant: 'info',
+      });
+      return;
+    }
     if (userSigned()) {
       try {
         const { voteCount } = post;
