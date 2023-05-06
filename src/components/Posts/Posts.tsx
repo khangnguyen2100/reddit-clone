@@ -17,7 +17,7 @@ type Props = {
 const Posts = (props: Props) => {
   const { communityData } = props;
   const {
-    postStateValue,
+    postsStateValue,
     setPostStateValue,
     onDeletePost,
     onSelectPost,
@@ -58,7 +58,7 @@ const Posts = (props: Props) => {
         <PostLoader />
       ) : (
         <Stack spacing={1.5} direction={'column'} className='mt-5'>
-          {postStateValue.posts.map(post => (
+          {postsStateValue.posts.map(post => (
             <PostItem
               post={post}
               key={post.id}

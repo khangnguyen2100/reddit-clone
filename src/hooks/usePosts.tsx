@@ -2,13 +2,13 @@ import { deleteDoc, doc } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
 import { useRecoilState } from 'recoil';
 
-import { Post, postState } from 'src/atoms';
+import { Post, postsState } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';
 
 import useCheckUser from './useCheckUser';
 
 const usePosts = () => {
-  const [postStateValue, setPostStateValue] = useRecoilState(postState);
+  const [postsStateValue, setPostStateValue] = useRecoilState(postsState);
   const { userSigned } = useCheckUser();
   const onVote = async () => {
     if (userSigned()) {
@@ -35,7 +35,7 @@ const usePosts = () => {
     return true;
   };
   return {
-    postStateValue,
+    postsStateValue,
     setPostStateValue,
     onVote,
     onSelectPost,
