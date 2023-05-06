@@ -6,12 +6,12 @@ import { FaReddit } from 'react-icons/fa';
 import { IoImageOutline } from 'react-icons/io5';
 
 import { Community } from 'src/atoms';
-import useCheckSigned from 'src/hooks/useCheckSigned';
+import useCheckUser from 'src/hooks/useCheckUser';
 type Props = {
   data: Community;
 };
 const CreatePostLink = ({ data }: Props) => {
-  const { userSigned } = useCheckSigned();
+  const { userSigned } = useCheckUser();
   const router = useRouter();
   const handleNavigateToSubmit = () => {
     if (userSigned()) {

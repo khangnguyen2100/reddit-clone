@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { authModalState } from 'src/atoms';
 import { auth } from 'src/firebase/clientApp';
 
-const useCheckSigned = () => {
+const useCheckUser = () => {
   const [user] = useAuthState(auth);
   const setAuthModal = useSetRecoilState(authModalState);
   const userSigned = () => {
@@ -24,4 +24,4 @@ const useCheckSigned = () => {
   };
 };
 
-export default useCheckSigned;
+export default useCheckUser;

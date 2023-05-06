@@ -5,7 +5,7 @@ import { Stack } from '@mui/material';
 import { Community, Post } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
 import usePosts from 'src/hooks/usePosts';
-import useCheckSigned from 'src/hooks/useCheckSigned';
+import useCheckUser from 'src/hooks/useCheckUser';
 
 import PostItem from './PostItem';
 import PostLoader from './PostLoader';
@@ -23,7 +23,7 @@ const Posts = (props: Props) => {
     onSelectPost,
     onVote,
   } = usePosts();
-  const { user } = useCheckSigned();
+  const { user } = useCheckUser();
   const [loading, setLoading] = useState<boolean>(false);
   const getPosts = async () => {
     setLoading(true);
