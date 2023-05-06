@@ -100,8 +100,7 @@ const usePosts = () => {
           posts: updatedPosts,
           postVotes: updatedPostVotes,
         }));
-        console.log('updatedPosts:', updatedPosts);
-        console.log('updatedPostVotes:', updatedPostVotes);
+
         const posDocRef = doc(db, 'posts', post.id!);
         batch.update(posDocRef, {
           voteCount: voteCount + voteChange,
