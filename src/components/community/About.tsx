@@ -103,9 +103,9 @@ const About = () => {
             {communityData?.createAt && (
               <p className='text-typo-secondary'>
                 Created{' '}
-                {moment(new Date(communityData?.createAt.seconds * 1000)).format(
-                  'MMM DD, YYYY',
-                )}
+                {moment(
+                  new Date(communityData?.createAt.seconds * 1000),
+                ).format('MMM DD, YYYY')}
               </p>
             )}
           </div>

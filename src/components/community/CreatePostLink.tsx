@@ -24,7 +24,7 @@ const CreatePostLink = ({ data }: Props) => {
       <div className='absolute left-1 top-2'>
         {false ? (
           <Image
-            src={data?.imageURL}
+            src={data?.imageURL || ''}
             height={50}
             width={50}
             alt={`${data.id}-avatar`}
