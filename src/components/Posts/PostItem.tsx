@@ -3,6 +3,7 @@ import { CircularProgress, Icon, Stack } from '@mui/material';
 import clsx from 'clsx';
 import moment from 'moment';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -22,14 +23,22 @@ type Props = {
   post: Post;
   isCreator: boolean;
   voteValue?: number;
-  onVote: (post: Post, vote: number, communityId: string) => {};
+  onVote: (
+    event: React.MouseEvent<SVGElement, MouseEvent>,
+    post: Post,
+    vote: number,
+    communityId: string,
+  ) => {};
   onDeletePost: (post: Post) => Promise<boolean>;
-  onSelectPost: () => void;
+  onSelectPost?: (post: Post) => void;
 };
 
 const PostItem = (props: Props) => {
+  const router = useRouter();
   const { post, voteValue, isCreator, onSelectPost, onDeletePost, onVote } =
     props;
+  // because we only have onSelectPost function in community page
+  const inSinglePostPage = !onSelectPost;
   const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
 
   const { ConfirmModal, confirmResult } = useConfirm({
@@ -38,7 +47,10 @@ const PostItem = (props: Props) => {
   });
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleDelete = async () => {
+  const handleDelete = async (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    event.stopPropagation();
     const ans = await confirmResult();
     if (ans) {
       setLoadingDelete(true);
@@ -53,15 +65,27 @@ const PostItem = (props: Props) => {
       }
       setLoadingDelete(false);
     }
+    if (inSinglePostPage) {
+      router.push(`/r/${post.communityId}`);
+    }
   };
   return (
     <>
       <div
-        className='flex cursor-pointer overflow-hidden rounded-md border border-gray-300 bg-sections-paper hover:border-gray-500'
-        onClick={onSelectPost}
+        className={clsx(
+          'flex cursor-pointer overflow-hidden rounded-md border border-gray-300 bg-sections-paper hover:border-gray-500',
+          inSinglePostPage &&
+            'cursor-[unset] rounded border-white hover:border-white',
+        )}
+        onClick={() => onSelectPost && onSelectPost(post)}
       >
         {/* vote block */}
-        <div className='flex w-10 flex-col items-center bg-gray-50 p-2'>
+        <div
+          className={clsx(
+            'flex w-10 flex-col items-center bg-gray-50 p-2',
+            inSinglePostPage && 'bg-transparent',
+          )}
+        >
           <Icon
             component={
               voteValue === 1 ? IoArrowUpCircleSharp : IoArrowUpCircleOutline
@@ -70,7 +94,7 @@ const PostItem = (props: Props) => {
               'cursor-pointer rounded-sm p-[2px] text-[28px] hover:bg-gray-200',
               voteValue === 1 ? 'text-oran' : 'text-gray-400',
             )}
-            onClick={() => onVote(post, 1, post.communityId)}
+            onClick={event => onVote(event, post, 1, post.communityId)}
           />
           <p
             className={clsx(
@@ -94,7 +118,7 @@ const PostItem = (props: Props) => {
               'cursor-pointer rounded-sm p-[2px] text-[28px] hover:bg-gray-200',
               voteValue === -1 ? 'text-blue' : 'text-gray-400',
             )}
-            onClick={() => onVote(post, -1, post.communityId)}
+            onClick={event => onVote(event, post, -1, post.communityId)}
           />
         </div>
         <div className='flex w-full flex-col'>
@@ -160,7 +184,7 @@ const PostItem = (props: Props) => {
             {isCreator && (
               <div
                 className='flex cursor-pointer rounded-sm px-3 py-2 text-center hover:bg-gray-200'
-                onClick={handleDelete}
+                onClick={event => handleDelete(event)}
               >
                 {loadingDelete ? (
                   <CircularProgress color='inherit' size={20} />

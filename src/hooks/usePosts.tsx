@@ -9,8 +9,9 @@ import {
 } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
 import { enqueueSnackbar } from 'notistack';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
 
 import { Post, PostVotes, communityState, postsState } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';
@@ -18,11 +19,18 @@ import { db, storage } from 'src/firebase/clientApp';
 import useCheckUser from './useCheckUser';
 
 const usePosts = () => {
+  const router = useRouter();
   const [postsStateValue, setPostStateValue] = useRecoilState(postsState);
   const { user, userSigned } = useCheckUser();
   const communityStateValue = useRecoilValue(communityState);
   const currentCommunity = useRecoilValue(communityState).currentCommunity;
-  const onVote = async (post: Post, vote: number, communityId: string) => {
+  const onVote = async (
+    event: React.MouseEvent<SVGElement, MouseEvent>,
+    post: Post,
+    vote: number,
+    communityId: string,
+  ) => {
+    event.stopPropagation();
     // show log in if user not log in
     const isJoined = communityStateValue.mySnippets?.some(
       item => item.communityId === communityId,
@@ -110,7 +118,12 @@ const usePosts = () => {
           posts: updatedPosts,
           postVotes: updatedPostVotes,
         }));
-
+        if (postsStateValue.selectedPost) {
+          setPostStateValue(prev => ({
+            ...prev,
+            selectedPost: updatedPost,
+          }));
+        }
         const posDocRef = doc(db, 'posts', post.id!);
         batch.update(posDocRef, {
           voteCount: voteCount + voteChange,
@@ -123,7 +136,14 @@ const usePosts = () => {
       }
     }
   };
-  const onSelectPost = () => {};
+  const onSelectPost = (post: Post) => {
+    // check only click on div element have class post-item
+    setPostStateValue(prev => ({
+      ...prev,
+      selectedPost: post,
+    }));
+    router.push(`/r/${currentCommunity?.id}/comments/${post.id}`);
+  };
   const onDeletePost = async (post: Post): Promise<boolean> => {
     // check post have image?
     if (post.imageURL) {

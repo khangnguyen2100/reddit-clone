@@ -1,6 +1,7 @@
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   increment,
   orderBy,
@@ -11,6 +12,8 @@ import {
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRouter } from 'next/router';
+import { enqueueSnackbar } from 'notistack';
 
 import {
   Community,
@@ -25,6 +28,7 @@ import { auth, db } from 'src/firebase/clientApp';
 import usePosts from './usePosts';
 
 const useCommunityData = () => {
+  const router = useRouter();
   const [communityStateValue, setCommunityStateValue] =
     useRecoilState(communityState);
   const [user] = useAuthState(auth);
@@ -196,6 +200,23 @@ const useCommunityData = () => {
       item => item.communityId === communityId,
     );
   };
+  const getCurrentCommunity = async (communityId: string) => {
+    try {
+      const communityDocRef = doc(db, 'communities', communityId);
+      const communityDoc = await getDoc(communityDocRef);
+      const communityData = {
+        id: communityDoc.id,
+        ...communityDoc.data(),
+      };
+      setCommunityStateValue(prev => ({
+        ...prev,
+        currentCommunity: communityData as Community,
+      }));
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: 'error' });
+    }
+  };
+
   useEffect(() => {
     // run after user change log-in/log-out
     if (!user) {
@@ -206,7 +227,12 @@ const useCommunityData = () => {
     }
     getMySippets();
   }, [user]);
-
+  useEffect(() => {
+    const { communityId } = router.query;
+    if (communityId && !communityStateValue.currentCommunity) {
+      getCurrentCommunity(communityId as string);
+    }
+  }, [router.query, communityStateValue.currentCommunity]);
   return {
     communityStateValue,
     toggleJoinOrLeaveCommunity,
