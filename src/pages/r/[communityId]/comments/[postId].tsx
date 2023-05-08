@@ -3,19 +3,15 @@ import { useRouter } from 'next/router';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect } from 'react';
 
-import { Community, Post } from 'src/atoms';
+import { Post } from 'src/atoms';
 import PageContent from 'src/components/Layout/PageContent';
 import PostItem from 'src/components/Posts/PostItem';
-import { NotFound } from 'src/components/community';
 import About from 'src/components/community/About';
 import { db } from 'src/firebase/clientApp';
 import useCheckUser from 'src/hooks/useCheckUser';
 import usePosts from 'src/hooks/usePosts';
-type CommunityPageProps = {
-  communityData: Community;
-};
 
-const CommunityPage = ({ communityData }: CommunityPageProps) => {
+const CommunityPage = () => {
   const router = useRouter();
   const { onDeletePost, onVote, postsStateValue, setPostStateValue } =
     usePosts();
