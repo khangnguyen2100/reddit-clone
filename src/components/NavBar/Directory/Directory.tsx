@@ -2,7 +2,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, IconButton, Menu, Typography, Icon } from '@mui/material';
 import clsx from 'clsx';
 import React from 'react';
-import { TiHome } from 'react-icons/ti';
+import { AiFillHome } from 'react-icons/ai';
 
 import Communities from './Communities';
 
@@ -26,11 +26,10 @@ const Directory = () => {
           Boolean(anchorElUser) && '!border-divider',
         )}
         onClick={handleOpenUserMenu}
-        sx={{ p: 0 }}
       >
         <div className='flex flex-1 items-center gap-x-1'>
           <Icon
-            component={TiHome}
+            component={AiFillHome}
             className='mr-[10px] text-[20px] text-typo-primary'
           />
           <Typography
