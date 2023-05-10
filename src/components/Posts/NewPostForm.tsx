@@ -16,6 +16,7 @@ import { IoDocumentText, IoImage } from 'react-icons/io5';
 import { Post } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';
 import useSelectFile from 'src/hooks/useSelectFile';
+import getUserDisplayName from '@/utils/getUserDisplayName';
 
 import { ImageUpload, TextInputs } from './PostsForm';
 import TabItem from './TabItem';
@@ -65,7 +66,7 @@ const NewPostForm = ({ user }: NewPostFormProps) => {
       title: textInputs.title,
       body: textInputs.body,
       creatorId: user.uid || '',
-      creatorDisplayName: user.displayName || user.email?.split('@')[0] || '',
+      creatorDisplayName: user.displayName || getUserDisplayName(user) || '',
       numberOfComments: 0,
       voteCount: 0,
       communityId,

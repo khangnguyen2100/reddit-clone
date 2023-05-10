@@ -10,24 +10,24 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import clsx from 'clsx';
 import Image from 'next/image';
 import React from 'react';
-import { useSignOut, useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { AiOutlineEye } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
-import { FiLogOut, FiLogIn } from 'react-icons/fi';
+import { FiLogIn, FiLogOut } from 'react-icons/fi';
 import { IoSparkles } from 'react-icons/io5';
-import { useSetRecoilState, useRecoilState, useResetRecoilState } from 'recoil';
-import clsx from 'clsx';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { authModalState, communityState, uiSettingState } from 'src/atoms';
-import { auth } from 'src/firebase/clientApp';
+import getUserDisplayName from '@/utils/getUserDisplayName';
 import avatarSrc from 'public/images/avatar.png';
+import { authModalState, uiSettingState } from 'src/atoms';
+import { auth } from 'src/firebase/clientApp';
 const DropDownMenu = () => {
   const setAuthModal = useSetRecoilState(authModalState);
   const [themeMode, setThemeMode] = useRecoilState(uiSettingState);
   const [user] = useAuthState(auth);
-  const resetCommunityState = useResetRecoilState(communityState);
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
@@ -45,7 +45,6 @@ const DropDownMenu = () => {
     signOut();
     handleCloseUserMenu();
     setAuthModal(prev => ({ ...prev, open: false }));
-    // resetCommunityState();
   };
   return (
     <Box sx={{ flexGrow: 0 }}>
@@ -68,7 +67,7 @@ const DropDownMenu = () => {
                   variant='h4'
                   className='text-xs font-medium text-typo-primary'
                 >
-                  {user?.displayName || user.email?.split('@')[0]}
+                  {user?.displayName || getUserDisplayName(user)}
                 </Typography>
                 <div className='flex items-center gap-x-[2px]'>
                   <IoSparkles fontSize={'12px'} color='#ff4500' />
