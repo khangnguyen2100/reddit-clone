@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 import { Post } from 'src/atoms';
 import PageContent from 'src/components/Layout/PageContent';
+import Comments from 'src/components/Posts/Comments/Comments';
 import PostItem from 'src/components/Posts/PostItem';
 import About from 'src/components/community/About';
 import { db } from 'src/firebase/clientApp';
@@ -57,6 +58,11 @@ const CommunityPage = () => {
                 )?.voteValue
               }
               key={postsStateValue.selectedPost?.id}
+            />
+            <Comments
+              user={user}
+              selectedPost={postsStateValue.selectedPost}
+              communityId={router.query.communityId as string}
             />
           </>
           <>
