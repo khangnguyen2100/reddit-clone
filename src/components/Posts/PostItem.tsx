@@ -3,11 +3,13 @@ import { CircularProgress, Icon, Stack } from '@mui/material';
 import clsx from 'clsx';
 import moment from 'moment';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsChat } from 'react-icons/bs';
+import { FaReddit } from 'react-icons/fa';
 import {
   IoArrowDownCircleOutline,
   IoArrowDownCircleSharp,
@@ -129,9 +131,35 @@ const PostItem = (props: Props) => {
               className='items-center text-center text-xs'
             >
               {/* Home Page Check */}
+              {!router.query.communityId && (
+                <div className='flex items-center gap-x-2'>
+                  {post.communityImageURL ? (
+                    <div className='relative block h-4 w-4 overflow-hidden rounded-full'>
+                      <Image
+                        src={post.communityImageURL}
+                        alt={post.communityId}
+                        fill
+                      />
+                    </div>
+                  ) : (
+                    <Icon component={FaReddit} className='text-xl text-blue' />
+                  )}
+                  <Link
+                    href={`/r/${post.communityId}`}
+                    onClick={e => e.stopPropagation()}
+                    className='text-xs font-medium hover:underline'
+                  >
+                    r/{post.communityId}
+                  </Link>
+                </div>
+              )}
               {/* creator name and date posted */}
               <p className='text-xs text-typo-secondary'>
-                Posted by u/{post.creatorDisplayName}{' '}
+                {' '}
+                • Posted by{' '}
+                <span className='font-medium'>
+                  u/{post.creatorDisplayName}
+                </span>{' '}
                 {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
               </p>
             </Stack>

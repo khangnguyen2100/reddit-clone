@@ -40,15 +40,17 @@ const useDirectory = () => {
   };
   useEffect(() => {
     const { currentCommunity } = communityStateValue;
-    setDirectoryState(prev => ({
-      ...prev,
-      selectedMenuItem: {
-        link: `r/${currentCommunity?.id}`,
-        displayText: `r/${currentCommunity?.id}`,
-        imageURL: currentCommunity?.imageURL,
-        icon: FaReddit,
-      } as DirectoryMenuItem,
-    }));
+    if (currentCommunity) {
+      setDirectoryState(prev => ({
+        ...prev,
+        selectedMenuItem: {
+          link: `r/${currentCommunity?.id}`,
+          displayText: `r/${currentCommunity?.id}`,
+          imageURL: currentCommunity?.imageURL,
+          icon: FaReddit,
+        } as DirectoryMenuItem,
+      }));
+    }
   }, [communityStateValue.currentCommunity]);
   return {
     directoryState,

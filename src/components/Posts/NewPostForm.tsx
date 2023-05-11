@@ -17,6 +17,7 @@ import { Post } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';
 import useSelectFile from 'src/hooks/useSelectFile';
 import getUserDisplayName from '@/utils/getUserDisplayName';
+import useCommunityData from 'src/hooks/useCommunityData';
 
 import { ImageUpload, TextInputs } from './PostsForm';
 import TabItem from './TabItem';
@@ -52,6 +53,7 @@ type NewPostFormProps = {
 };
 const NewPostForm = ({ user }: NewPostFormProps) => {
   const router = useRouter();
+  const { communityStateValue } = useCommunityData();
   const [selected, setSelected] = useState(formTabs[0].title);
   const [textInputs, setTextInputs] = useState({
     title: '',
@@ -70,6 +72,7 @@ const NewPostForm = ({ user }: NewPostFormProps) => {
       numberOfComments: 0,
       voteCount: 0,
       communityId,
+      communityImageURL: communityStateValue.currentCommunity?.imageURL || '',
       createdAt: serverTimestamp() as Timestamp,
     };
     try {
