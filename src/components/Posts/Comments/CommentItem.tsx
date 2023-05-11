@@ -1,12 +1,13 @@
 import { CircularProgress, Icon, Stack } from '@mui/material';
-import React from 'react';
-import { FaReddit } from 'react-icons/fa';
+import { Timestamp } from 'firebase/firestore';
 import moment from 'moment';
+import { FaReddit } from 'react-icons/fa';
 import {
   IoArrowDownCircleOutline,
   IoArrowUpCircleOutline,
 } from 'react-icons/io5';
 
+import useConfirm from 'src/hooks/useConfirm';
 export type Comment = {
   id: string;
   creatorId: string;
@@ -17,7 +18,6 @@ export type Comment = {
   text: string;
   createdAt: Timestamp;
 };
-import useConfirm from 'src/hooks/useConfirm';
 
 type Props = {
   comment: Comment;
