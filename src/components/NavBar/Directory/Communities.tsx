@@ -1,12 +1,21 @@
 import { MenuItem, Typography } from '@mui/material';
 import { VscAdd } from 'react-icons/vsc';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { communityModalState } from 'src/atoms';
+import { communityModalState, communityState } from 'src/atoms';
 import CreateCommunities from 'src/components/Modal/CreateCommunities/CreateCommunities';
+
+import MenuListItem from './MenuListItem';
 
 const Communities = () => {
   const [openModal, setOpenModal] = useRecoilState(communityModalState);
+  const mySnippetsCommunities = useRecoilValue(communityState).mySnippets;
+
+  // Filter out communities where the user is not a moderator.
+  const communitiesModerator =
+    mySnippetsCommunities?.filter(item => item.isModerator) || [];
+
+  // Close the modal.
   const handleCloseModal = () => {
     setOpenModal({
       open: false,
@@ -14,13 +23,23 @@ const Communities = () => {
   };
   return (
     <div className='flex w-full flex-col'>
-      {/* popup modal */}
-      <CreateCommunities
-        open={openModal.open}
-        handleCloseModal={handleCloseModal}
-      />
+      {communitiesModerator?.length > 0 && (
+        <>
+          <Typography className='mb-2 mt-4 px-6 text-xs font-medium uppercase text-typo-secondary'>
+            Your Moderation
+          </Typography>
+          {communitiesModerator &&
+            communitiesModerator.map(item => (
+              <MenuListItem
+                key={item.communityId}
+                communityId={item.communityId}
+                imageURL={item?.imageURL || ''}
+              />
+            ))}
+        </>
+      )}
 
-      <Typography className='my-4 px-6 text-[10px] font-medium uppercase text-typo-secondary'>
+      <Typography className='mb-2 mt-4 px-6 text-xs font-medium uppercase text-typo-secondary'>
         Your Communities
       </Typography>
       <MenuItem
@@ -36,6 +55,19 @@ const Communities = () => {
           Create Community
         </Typography>
       </MenuItem>
+      {mySnippetsCommunities &&
+        mySnippetsCommunities.map(item => (
+          <MenuListItem
+            key={item.communityId}
+            communityId={item.communityId}
+            imageURL={item?.imageURL || ''}
+          />
+        ))}
+      {/* popup modal */}
+      <CreateCommunities
+        open={openModal.open}
+        handleCloseModal={handleCloseModal}
+      />
     </div>
   );
 };
