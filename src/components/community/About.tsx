@@ -10,11 +10,12 @@ import { FaBirthdayCake, FaReddit } from 'react-icons/fa';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { useSetRecoilState } from 'recoil';
 
+import getUserDisplayName from '@/utils/getUserDisplayName';
 import { Community, communityState } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';
 import useCheckUser from 'src/hooks/useCheckUser';
-import useSelectFile from 'src/hooks/useSelectFile';
 import useCommunityData from 'src/hooks/useCommunityData';
+import useSelectFile from 'src/hooks/useSelectFile';
 
 import { ButtonBg } from '../common';
 
@@ -109,6 +110,18 @@ const About = () => {
               </p>
             )}
           </div>
+          <Divider />
+          {/* creator */}
+          {user?.uid === communityData?.creatorId && (
+            <div className='flex w-full text-xs'>
+              <h4 className=''>
+                This community is created by{' '}
+                <span className='font-medium'>
+                  u/{user?.displayName || getUserDisplayName(user)}
+                </span>
+              </h4>
+            </div>
+          )}
           {/* create post button */}
           <Divider />
           <div
