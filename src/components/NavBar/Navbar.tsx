@@ -3,10 +3,10 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { auth } from 'src/firebase/clientApp';
 
+import Directory from './Directory/Directory';
 import Logo from './Logo';
 import RightContent from './RightContent/RightContent';
 import SearchInput from './SearchInput';
-import Directory from './Directory/Directory';
 
 const NavBar = () => {
   const [user] = useAuthState(auth);

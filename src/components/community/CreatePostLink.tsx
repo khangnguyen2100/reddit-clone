@@ -7,15 +7,22 @@ import { IoImageOutline } from 'react-icons/io5';
 
 import { Community } from 'src/atoms';
 import useCheckUser from 'src/hooks/useCheckUser';
+import useDirectory from 'src/hooks/useDirectory';
 type Props = {
   data: Community;
 };
 const CreatePostLink = ({ data }: Props) => {
-  const { userSigned } = useCheckUser();
   const router = useRouter();
+  const { userSigned } = useCheckUser();
+  const { toggleDirectoryOpenMenu } = useDirectory();
+
   const handleNavigateToSubmit = () => {
     if (userSigned()) {
-      router.push(`/r/${data.id}/submit`);
+      if (!router.query?.communityId) {
+        toggleDirectoryOpenMenu();
+      } else {
+        router.push(`/r/${data.id}/submit`);
+      }
     }
   };
   return (

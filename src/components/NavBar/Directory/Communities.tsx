@@ -1,6 +1,7 @@
 import { MenuItem, Typography } from '@mui/material';
 import { VscAdd } from 'react-icons/vsc';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { FaReddit } from 'react-icons/fa';
 
 import { communityModalState, communityState } from 'src/atoms';
 import CreateCommunities from 'src/components/Modal/CreateCommunities/CreateCommunities';
@@ -11,10 +12,6 @@ const Communities = () => {
   const [openModal, setOpenModal] = useRecoilState(communityModalState);
   const mySnippetsCommunities = useRecoilValue(communityState).mySnippets;
 
-  // Filter out communities where the user is not a moderator.
-  const communitiesModerator =
-    mySnippetsCommunities?.filter(item => item.isModerator) || [];
-
   // Close the modal.
   const handleCloseModal = () => {
     setOpenModal({
@@ -23,22 +20,6 @@ const Communities = () => {
   };
   return (
     <div className='flex w-full flex-col'>
-      {communitiesModerator?.length > 0 && (
-        <>
-          <Typography className='mb-2 mt-4 px-6 text-xs font-medium uppercase text-typo-secondary'>
-            Your Moderation
-          </Typography>
-          {communitiesModerator &&
-            communitiesModerator.map(item => (
-              <MenuListItem
-                key={item.communityId}
-                communityId={item.communityId}
-                imageURL={item?.imageURL || ''}
-              />
-            ))}
-        </>
-      )}
-
       <Typography className='mb-2 mt-4 px-6 text-xs font-medium uppercase text-typo-secondary'>
         Your Communities
       </Typography>
@@ -59,7 +40,9 @@ const Communities = () => {
         mySnippetsCommunities.map(item => (
           <MenuListItem
             key={item.communityId}
-            communityId={item.communityId}
+            displayText={`r/${item.communityId}`}
+            icon={FaReddit}
+            link={`r/${item.communityId}`}
             imageURL={item?.imageURL || ''}
           />
         ))}
