@@ -9,21 +9,10 @@ import useDirectory from 'src/hooks/useDirectory';
 import Communities from './Communities';
 
 const Directory = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const buttonRef = React.useRef<HTMLButtonElement | null>(null);
   const { directoryState, openDirectoryMenu, closeDirectoryMenu } =
     useDirectory();
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-    openDirectoryMenu();
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-    closeDirectoryMenu();
-  };
   return (
     <Box className='relative w-[17vw] mdd:w-auto' sx={{ flexGrow: 0 }}>
       <IconButton
@@ -31,7 +20,8 @@ const Directory = () => {
           'flex w-full items-center justify-between rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider',
           directoryState.isOpen && '!border-divider',
         )}
-        onClick={handleOpenUserMenu}
+        onClick={openDirectoryMenu}
+        ref={buttonRef}
       >
         <div className='flex flex-1 items-center gap-x-1'>
           {directoryState.selectedMenuItem.imageURL ? (
@@ -64,7 +54,7 @@ const Directory = () => {
       </IconButton>
       <Menu
         id='menu-appbar'
-        anchorEl={anchorElUser}
+        anchorEl={directoryState.isOpen ? buttonRef.current : null}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'left',
@@ -75,7 +65,7 @@ const Directory = () => {
           horizontal: 'left',
         }}
         open={directoryState.isOpen}
-        onClose={handleCloseUserMenu}
+        onClose={closeDirectoryMenu}
         sx={{
           mt: '35px',
           '& .MuiMenu-paper': {
