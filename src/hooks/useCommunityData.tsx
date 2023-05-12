@@ -239,6 +239,7 @@ const useCommunityData = () => {
   }, [router.query, communityStateValue.currentCommunity]);
   return {
     communityStateValue,
+    setCommunityStateValue,
     toggleJoinOrLeaveCommunity,
     loading,
     error,

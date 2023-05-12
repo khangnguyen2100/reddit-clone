@@ -25,10 +25,14 @@ import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { BsFillEyeFill, BsFillPersonFill } from 'react-icons/bs';
+import { FaReddit } from 'react-icons/fa';
 import { HiLockClosed } from 'react-icons/hi';
 
+import { CommunitySnippet } from 'src/atoms';
 import { ButtonBg } from 'src/components/common';
 import { auth, db } from 'src/firebase/clientApp';
+import useCommunityData from 'src/hooks/useCommunityData';
+import useDirectory from 'src/hooks/useDirectory';
 
 type Props = {
   open: boolean;
@@ -64,6 +68,8 @@ const communityType: CommunityType[] = [
 const CreateCommunities = (props: Props) => {
   const { open, handleCloseModal } = props;
   const [user] = useAuthState(auth);
+  const { setCommunityStateValue } = useCommunityData();
+  const { closeDirectoryMenu, onSelectMenuItem } = useDirectory();
   const [communityName, setCommunityName] = useState<string>('');
   const totalCharactersRemaining = 21;
   const [charactersRemaining, setCharactersRemaining] = useState(
@@ -122,10 +128,34 @@ const CreateCommunities = (props: Props) => {
           `users/${user?.uid}/communitySnippets`,
           communityName,
         );
-        transaction.set(userDocRef, {
+
+        const newSnippet: CommunitySnippet = {
           communityId: communityName,
           isModerator: true,
-        });
+        };
+        transaction.set(userDocRef, newSnippet);
+        setCommunityStateValue(prev => ({
+          ...prev,
+          mySnippets: [
+            ...(prev.mySnippets as CommunitySnippet[]),
+            newSnippet,
+          ] as CommunitySnippet[],
+        }));
+        closeDirectoryMenu();
+        setTimeout(() => {
+          handleCloseModal();
+          setCharactersRemaining(charactersRemaining);
+          setCommunityName('');
+          setCommunityTypeValue('public');
+          setIsAdultContent(false);
+        }, 1000);
+        setTimeout(() => {
+          onSelectMenuItem({
+            displayText: `/r/${communityName}`,
+            link: `/r/${communityName}`,
+            icon: FaReddit,
+          });
+        }, 2000);
       });
     } catch (error: any) {
       console.log('error:', error.message);
@@ -264,7 +294,10 @@ const CreateCommunities = (props: Props) => {
           <FormGroup>
             <FormControlLabel
               control={
-                <Checkbox onChange={e => setIsAdultContent(e.target.checked)} />
+                <Checkbox
+                  onChange={e => setIsAdultContent(e.target.checked)}
+                  checked={isAdultContent}
+                />
               }
               label={
                 <div className='flex items-center gap-x-2'>
