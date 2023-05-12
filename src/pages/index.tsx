@@ -14,6 +14,8 @@ import { CommunitySnippet, Post, PostVotes } from 'src/atoms';
 import PageContent from 'src/components/Layout/PageContent';
 import PostItem from 'src/components/Posts/PostItem';
 import PostLoader from 'src/components/Posts/PostLoader';
+import PersonalHome from 'src/components/community/PersonalHome';
+import TopCommunities from 'src/components/community/TopCommunities';
 import { auth, db } from 'src/firebase/clientApp';
 import useCommunityData from 'src/hooks/useCommunityData';
 import usePosts from 'src/hooks/usePosts';
@@ -134,7 +136,7 @@ export default function Home() {
         {loading ? (
           <PostLoader />
         ) : (
-          <Stack spacing={1.5} direction={'column'} className='mt-5'>
+          <Stack spacing={1.5} direction={'column'} className='mt-3'>
             {postsStateValue.posts.map(post => (
               <PostItem
                 post={post}
@@ -153,7 +155,12 @@ export default function Home() {
           </Stack>
         )}
       </>
-      <></>
+      <>
+        <Stack spacing={2} className='mt-3'>
+          <TopCommunities />
+          <PersonalHome />
+        </Stack>
+      </>
     </PageContent>
   );
 }
