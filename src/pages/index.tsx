@@ -1,7 +1,6 @@
 import { Stack } from '@mui/material';
 import {
   collection,
-  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -11,7 +10,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { CommunitySnippet, Post } from 'src/atoms';
+import { CommunitySnippet, Post, PostVotes } from 'src/atoms';
 import PageContent from 'src/components/Layout/PageContent';
 import PostItem from 'src/components/Posts/PostItem';
 import PostLoader from 'src/components/Posts/PostLoader';
@@ -31,9 +30,10 @@ export default function Home() {
   } = usePosts();
   const { communityStateValue } = useCommunityData();
   const userHomeFeed = async () => {
+    // load posts in community user joined
     setLoading(true);
     try {
-      // user not join any community ? load posts for no user feed
+      // user not join any community? load posts for no user feed
       if (communityStateValue.mySnippets?.length) {
         const communityIds = communityStateValue.mySnippets.map(
           (item: CommunitySnippet) => item.communityId,
@@ -62,10 +62,20 @@ export default function Home() {
     setLoading(false);
   };
   const noUserHomeFeed = async () => {
+    // get all public posts
     setLoading(true);
     try {
+      const publicCommunityQuery = query(
+        collection(db, 'communities'),
+        where('privacyType', '==', 'public'),
+      );
+      const publicCommunityDocs = await getDocs(publicCommunityQuery);
+      const publicCommunityDataIds = publicCommunityDocs.docs.map(
+        item => item.id,
+      );
       const postsQuery = query(
         collection(db, 'posts'),
+        where('communityId', 'in', publicCommunityDataIds),
         limit(10),
         orderBy('voteCount', 'desc'),
       );
@@ -80,7 +90,32 @@ export default function Home() {
     }
     setLoading(false);
   };
-  const getUserPostVote = () => {};
+  const getUserPostVote = async () => {
+    try {
+      const postsIds = postsStateValue.posts.map(post => post.id);
+      const postVotesQuery = query(
+        collection(db, `users`, `${user?.uid}/postVotes`),
+        where('postId', 'in', postsIds),
+      );
+      const postVotesDocs = await getDocs(postVotesQuery);
+      const postVotes = postVotesDocs.docs.map(item => ({
+        id: item.id,
+        ...item.data(),
+      })) as PostVotes[];
+
+      const orderPostVotes: PostVotes[] = [];
+      postsStateValue.posts.forEach(post => {
+        const result = postVotes.find(vote => vote.postId === post.id);
+        if (result) orderPostVotes.push(result);
+      });
+      setPostStateValue(prev => ({
+        ...prev,
+        postVotes: postVotes as PostVotes[],
+      }));
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
 
   useEffect(() => {
     // after fetched snippets from useCommunityData
@@ -90,6 +125,9 @@ export default function Home() {
     // only check user after loaded
     if (!user && !loadingUser) noUserHomeFeed();
   }, [user, loadingUser]);
+  useEffect(() => {
+    if (user && postsStateValue.posts.length) getUserPostVote();
+  }, [user, postsStateValue.posts.length]);
   return (
     <PageContent>
       <>
