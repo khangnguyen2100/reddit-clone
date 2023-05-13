@@ -8,10 +8,10 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
+import { useRouter } from 'next/router';
 import { enqueueSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { useRouter } from 'next/router';
 
 import { Post, PostVotes, communityState, postsState } from 'src/atoms';
 import { db, storage } from 'src/firebase/clientApp';
@@ -142,7 +142,7 @@ const usePosts = () => {
       ...prev,
       selectedPost: post,
     }));
-    router.push(`/r/${currentCommunity?.id}/comments/${post.id}`);
+    router.push(`/r/${post.communityId}/comments/${post.id}`);
   };
   const onDeletePost = async (post: Post): Promise<boolean> => {
     // check post have image?
