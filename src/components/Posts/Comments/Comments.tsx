@@ -19,6 +19,8 @@ import { useSetRecoilState } from 'recoil';
 import getUserDisplayName from '@/utils/getUserDisplayName';
 import { Post, postsState } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
+import useCheckUser from 'src/hooks/useCheckUser';
+import useCommunityData from 'src/hooks/useCommunityData';
 
 import CommentItem, { Comment } from './CommentItem';
 import CommentInput from './CommentInput';
@@ -54,15 +56,20 @@ const CommentLoader = () => {
 };
 const Comments = (props: Props) => {
   const { user, communityId, selectedPost } = props;
-
   const setPostState = useSetRecoilState(postsState);
-
+  const { isUserJoinedCommunity } = useCommunityData();
   const [commentText, setCommentText] = useState<string>('');
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [createLoading, setCreateLoading] = useState<boolean>(false);
   const [loadingDelete, setLoadingDelete] = useState<string>('');
   const onCreateComment = async () => {
+    if (!isUserJoinedCommunity(communityId)) {
+      enqueueSnackbar('You need to join community to comment', {
+        variant: 'info',
+      });
+      return;
+    }
     setCreateLoading(true);
     try {
       const batch = writeBatch(db);

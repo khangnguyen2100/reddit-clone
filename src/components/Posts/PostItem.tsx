@@ -132,34 +132,37 @@ const PostItem = (props: Props) => {
             >
               {/* Home Page Check */}
               {!router.query.communityId && (
-                <div className='flex items-center gap-x-2'>
-                  {post.communityImageURL ? (
-                    <div className='relative block h-4 w-4 overflow-hidden rounded-full'>
-                      <Image
-                        src={post.communityImageURL}
-                        alt={post.communityId}
-                        fill
+                <>
+                  <div className='flex items-center gap-x-2'>
+                    {post.communityImageURL ? (
+                      <div className='relative block h-4 w-4 overflow-hidden rounded-full'>
+                        <Image
+                          src={post.communityImageURL}
+                          alt={post.communityId}
+                          fill
+                        />
+                      </div>
+                    ) : (
+                      <Icon
+                        component={FaReddit}
+                        className='text-xl text-blue'
                       />
-                    </div>
-                  ) : (
-                    <Icon component={FaReddit} className='text-xl text-blue' />
-                  )}
-                  <Link
-                    href={`/r/${post.communityId}`}
-                    onClick={e => e.stopPropagation()}
-                    className='text-xs font-medium hover:underline'
-                  >
-                    r/{post.communityId}
-                  </Link>
-                </div>
+                    )}
+                    <Link
+                      href={`/r/${post.communityId}`}
+                      onClick={e => e.stopPropagation()}
+                      className='text-xs font-medium hover:underline'
+                    >
+                      r/{post.communityId}
+                    </Link>
+                  </div>
+                  <span> • </span>
+                </>
               )}
               {/* creator name and date posted */}
               <p className='text-xs text-typo-secondary'>
-                {' '}
-                • Posted by{' '}
-                <span className='font-medium'>
-                  u/{post.creatorDisplayName}
-                </span>{' '}
+                Posted by{' '}
+                <span className='font-medium'>u/{post.creatorDisplayName}</span>{' '}
                 {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
               </p>
             </Stack>

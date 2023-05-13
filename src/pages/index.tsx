@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { CommunitySnippet, Post, PostVotes } from 'src/atoms';
+import { defaultState } from 'src/atoms/directoryAtom';
 import PageContent from 'src/components/Layout/PageContent';
 import PostItem from 'src/components/Posts/PostItem';
 import PostLoader from 'src/components/Posts/PostLoader';
@@ -18,6 +19,7 @@ import PersonalHome from 'src/components/community/PersonalHome';
 import TopCommunities from 'src/components/community/TopCommunities';
 import { auth, db } from 'src/firebase/clientApp';
 import useCommunityData from 'src/hooks/useCommunityData';
+import useDirectory from 'src/hooks/useDirectory';
 import usePosts from 'src/hooks/usePosts';
 
 export default function Home() {
@@ -31,6 +33,7 @@ export default function Home() {
     onVote,
   } = usePosts();
   const { communityStateValue } = useCommunityData();
+  const { setDirectoryState, directoryState } = useDirectory();
   const userHomeFeed = async () => {
     // load posts in community user joined
     setLoading(true);
@@ -130,6 +133,12 @@ export default function Home() {
   useEffect(() => {
     if (user && postsStateValue.posts.length) getUserPostVote();
   }, [user, postsStateValue.posts.length]);
+
+  useEffect(() => {
+    if (directoryState.selectedMenuItem.link !== '/') {
+      setDirectoryState(defaultState);
+    }
+  }, [directoryState]);
   return (
     <PageContent>
       <>

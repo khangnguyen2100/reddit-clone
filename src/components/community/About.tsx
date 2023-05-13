@@ -112,16 +112,14 @@ const About = () => {
           </div>
           <Divider />
           {/* creator */}
-          {user?.uid === communityData?.creatorId && (
-            <div className='flex w-full text-xs'>
-              <h4 className=''>
-                This community is created by{' '}
-                <span className='font-medium'>
-                  u/{user?.displayName || getUserDisplayName(user)}
-                </span>
-              </h4>
-            </div>
-          )}
+          <div className='flex w-full text-xs'>
+            <h4 className=''>
+              This community is created by{' '}
+              <span className='font-medium'>
+                u/{user?.displayName || getUserDisplayName(user)}
+              </span>
+            </h4>
+          </div>
           {/* create post button */}
           <Divider />
           <div
