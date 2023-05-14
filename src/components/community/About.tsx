@@ -1,6 +1,7 @@
 import { Divider, Icon, Stack } from '@mui/material';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import millify from 'millify';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -89,7 +90,7 @@ const About = () => {
           <div className='flex w-full text-xs font-bold'>
             <h4 className=' font-medium'>
               <span className='text-base font-bold'>
-                {communityData?.numberOfMembers.toLocaleString()}
+                {millify(communityData?.numberOfMembers || 0)}
               </span>{' '}
               Members
             </h4>

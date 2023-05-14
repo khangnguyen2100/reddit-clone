@@ -2,21 +2,13 @@
 import {
   Button,
   CircularProgress,
-  Divider,
   Icon,
   Menu,
   MenuItem,
   Stack,
 } from '@mui/material';
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  TelegramShareButton,
-  FacebookIcon,
-  TelegramIcon,
-  TwitterIcon,
-} from 'react-share';
 import clsx from 'clsx';
+import millify from 'millify';
 import moment from 'moment';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,10 +24,17 @@ import {
   IoArrowRedoOutline,
   IoArrowUpCircleOutline,
   IoArrowUpCircleSharp,
-  IoBookmarkOutline,
 } from 'react-icons/io5';
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+} from 'react-share';
 
-import { Post, communityState } from 'src/atoms';
+import { Post } from 'src/atoms';
 import useConfirm from 'src/hooks/useConfirm';
 type Props = {
   post: Post;
@@ -112,7 +111,7 @@ const PostItem = (props: Props) => {
         {/* vote block */}
         <div
           className={clsx(
-            'flex w-10 flex-col items-center bg-gray-50 p-2',
+            'flex w-[50px] flex-col items-center bg-gray-50 p-2',
             inSinglePostPage && 'bg-transparent',
           )}
         >
@@ -121,14 +120,14 @@ const PostItem = (props: Props) => {
               voteValue === 1 ? IoArrowUpCircleSharp : IoArrowUpCircleOutline
             }
             className={clsx(
-              'cursor-pointer rounded-sm p-[2px] text-[28px] hover:bg-gray-200',
+              'cursor-pointer rounded-sm p-[2px] text-[30px] hover:bg-gray-200',
               voteValue === 1 ? 'text-oran' : 'text-gray-400',
             )}
             onClick={event => onVote(event, post, 1, post.communityId)}
           />
           <p
             className={clsx(
-              'text-xs font-semibold',
+              ' font-semibold',
               voteValue === 1
                 ? 'text-oran'
                 : voteValue === -1
@@ -136,7 +135,7 @@ const PostItem = (props: Props) => {
                 : 'text-gray-400',
             )}
           >
-            {post.voteCount}
+            {millify(post.voteCount)}
           </p>
           <Icon
             component={
@@ -145,7 +144,7 @@ const PostItem = (props: Props) => {
                 : IoArrowDownCircleOutline
             }
             className={clsx(
-              'cursor-pointer rounded-sm p-[2px] text-[28px] hover:bg-gray-200',
+              'cursor-pointer rounded-sm p-[2px] text-[30px] hover:bg-gray-200',
               voteValue === -1 ? 'text-blue' : 'text-gray-400',
             )}
             onClick={event => onVote(event, post, -1, post.communityId)}
