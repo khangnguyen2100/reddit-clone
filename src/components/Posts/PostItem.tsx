@@ -1,12 +1,28 @@
 /* eslint-disable no-unused-vars */
-import { CircularProgress, Icon, Stack } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Icon,
+  Menu,
+  MenuItem,
+  Stack,
+} from '@mui/material';
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  TelegramShareButton,
+  FacebookIcon,
+  TelegramIcon,
+  TwitterIcon,
+} from 'react-share';
 import clsx from 'clsx';
 import moment from 'moment';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsChat } from 'react-icons/bs';
 import { FaReddit } from 'react-icons/fa';
@@ -70,6 +86,18 @@ const PostItem = (props: Props) => {
     if (inSinglePostPage) {
       router.push(`/r/${post.communityId}`);
     }
+  };
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const domain = useRef<string>(window.location.origin);
+  const handleShare = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setAnchorEl(null);
   };
   return (
     <>
@@ -196,21 +224,70 @@ const PostItem = (props: Props) => {
               <p className='text-xs'>{post.numberOfComments}</p>
             </div>
             {/* share */}
-            <div className='flex cursor-pointer rounded-sm px-3 py-2 text-center hover:bg-gray-200'>
+            <Button
+              className='flex cursor-pointer rounded-sm px-3 py-2 text-center hover:bg-gray-200'
+              onClick={handleShare}
+              id='basic-button'
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup='true'
+              aria-expanded={open ? 'true' : undefined}
+            >
               <Icon
                 component={IoArrowRedoOutline}
-                className='mr-2 text-[20px]'
+                className='mr-2 text-[20px] text-typo-secondary'
               />
-              <p className='text-xs'>Share</p>
-            </div>
+              <p className='text-xs text-typo-secondary'>Share</p>
+            </Button>
+            <Menu
+              id='basic-menu'
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <FacebookShareButton
+                  url={`${domain.current}/r/${post.communityId}/comments/${post.id}`}
+                  className='flex-center gap-x-2 py-1 hover:bg-gray-200'
+                  quote={post.title}
+                  hashtag={`#${post.communityId}`}
+                >
+                  <FacebookIcon size={20} round />
+                  <p className='text-xs font-medium'>Facebook</p>
+                </FacebookShareButton>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <TwitterShareButton
+                  url={`${domain.current}/r/${post.communityId}/comments/${post.id}`}
+                  className='flex-center gap-x-2 py-1 hover:bg-gray-200'
+                  title={post.title}
+                  hashtags={[post.communityId]}
+                >
+                  <TwitterIcon size={20} round />
+                  <p className='text-xs font-medium'>Twitter</p>
+                </TwitterShareButton>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <TelegramShareButton
+                  url={`${domain.current}/r/${post.communityId}/comments/${post.id}`}
+                  className='flex-center gap-x-2 py-1 hover:bg-gray-200'
+                  title={post.title}
+                >
+                  <TelegramIcon size={20} round />
+                  <p className='text-xs font-medium'>Telegram</p>
+                </TelegramShareButton>
+              </MenuItem>
+            </Menu>
             {/* save */}
-            <div className='flex cursor-pointer rounded-sm px-3 py-2 text-center hover:bg-gray-200'>
+            {/* <div className='flex cursor-pointer rounded-sm px-3 py-2 text-center hover:bg-gray-200'>
               <Icon
                 component={IoBookmarkOutline}
                 className='mr-2 text-[20px]'
               />
               <p className='text-xs'>Save</p>
-            </div>
+            </div> */}
             {/* Delete */}
             {isCreator && (
               <div
