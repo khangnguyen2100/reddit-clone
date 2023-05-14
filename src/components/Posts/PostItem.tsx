@@ -94,7 +94,7 @@ const PostItem = (props: Props) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClose = (event: React.MouseEvent<HTMLLIElement>) => {
     event.stopPropagation();
     setAnchorEl(null);
   };

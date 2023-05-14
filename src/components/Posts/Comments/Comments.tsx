@@ -19,11 +19,10 @@ import { useSetRecoilState } from 'recoil';
 import getUserDisplayName from '@/utils/getUserDisplayName';
 import { Post, postsState } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
-import useCheckUser from 'src/hooks/useCheckUser';
 import useCommunityData from 'src/hooks/useCommunityData';
 
-import CommentItem, { Comment } from './CommentItem';
 import CommentInput from './CommentInput';
+import CommentItem, { Comment } from './CommentItem';
 
 type Props = {
   user?: User | null;

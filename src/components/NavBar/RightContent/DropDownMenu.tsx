@@ -2,11 +2,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {
   Box,
-  Divider,
   IconButton,
   Menu,
   MenuItem,
-  Switch,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -14,19 +12,17 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import React from 'react';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
-import { AiOutlineEye } from 'react-icons/ai';
-import { CgProfile } from 'react-icons/cg';
 import { FiLogIn, FiLogOut } from 'react-icons/fi';
 import { IoSparkles } from 'react-icons/io5';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import getUserDisplayName from '@/utils/getUserDisplayName';
 import avatarSrc from 'public/images/avatar.png';
-import { authModalState, uiSettingState } from 'src/atoms';
+import { authModalState } from 'src/atoms';
 import { auth } from 'src/firebase/clientApp';
 const DropDownMenu = () => {
   const setAuthModal = useSetRecoilState(authModalState);
-  const [themeMode, setThemeMode] = useRecoilState(uiSettingState);
+  // const [themeMode, setThemeMode] = useRecoilState(uiSettingState);
   const [user] = useAuthState(auth);
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(

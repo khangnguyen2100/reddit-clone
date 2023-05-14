@@ -1,11 +1,11 @@
+import { Stack } from '@mui/material';
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { Stack } from '@mui/material';
 
 import { Community, Post } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
-import usePosts from 'src/hooks/usePosts';
 import useCheckUser from 'src/hooks/useCheckUser';
+import usePosts from 'src/hooks/usePosts';
 
 import PostItem from './PostItem';
 import PostLoader from './PostLoader';
