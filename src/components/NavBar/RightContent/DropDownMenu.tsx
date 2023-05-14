@@ -103,7 +103,8 @@ const DropDownMenu = () => {
       >
         {user && (
           <div>
-            <MenuItem>
+            {/* profile */}
+            {/* <MenuItem>
               <CgProfile
                 className='mr-[10px] text-typo-primary'
                 fontSize={20}
@@ -115,8 +116,9 @@ const DropDownMenu = () => {
                 Profile
               </Typography>
             </MenuItem>
-            <Divider />
-            <MenuItem>
+            <Divider /> */}
+            {/* darkMode */}
+            {/* <MenuItem>
               <AiOutlineEye
                 className='mr-[10px] text-typo-primary'
                 fontSize={20}
@@ -137,7 +139,8 @@ const DropDownMenu = () => {
                 }
               />
             </MenuItem>
-            <Divider />
+            <Divider /> */}
+            {/* logout */}
             <MenuItem onClick={handleSignOut}>
               <FiLogOut className='mr-[10px] text-typo-primary' fontSize={20} />
               <Typography

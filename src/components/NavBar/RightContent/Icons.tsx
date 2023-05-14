@@ -1,4 +1,5 @@
 import { Divider, IconButton, Tooltip } from '@mui/material';
+import { enqueueSnackbar } from 'notistack';
 import React from 'react';
 import { BsArrowUpRightCircle, BsChatDots } from 'react-icons/bs';
 import {
@@ -26,8 +27,14 @@ const IconBtn = ({ onClick, children, title }: IconBtnProps) => {
   );
 };
 const Icons = () => {
+  const handleClick = () => {
+    enqueueSnackbar(
+      'This feature is not available yet. Please wait for the next update. 😊',
+      { variant: 'info' },
+    );
+  };
   return (
-    <div className='flex-center gap-x-2 std:gap-x-1'>
+    <div className='flex-center gap-x-2 std:gap-x-1' onClick={handleClick}>
       <div className='flex-center gap-x-2 mdd:hidden std:gap-x-1'>
         <IconBtn title='Popular'>
           <BsArrowUpRightCircle color='typo-secondary' fontSize={20} />

@@ -1,6 +1,7 @@
 import { CircularProgress, Icon, Stack } from '@mui/material';
 import { Timestamp } from 'firebase/firestore';
 import moment from 'moment';
+import { enqueueSnackbar } from 'notistack';
 import { FaReddit } from 'react-icons/fa';
 import {
   IoArrowDownCircleOutline,
@@ -40,6 +41,12 @@ const CommentItem = (props: Props) => {
       onDeleteComment(comment);
     }
   };
+  const handleVote = () => {
+    enqueueSnackbar(
+      'This feature is not available yet. Please try again later',
+      { variant: 'info' },
+    );
+  };
   return (
     <>
       <Stack spacing={1}>
@@ -66,17 +73,25 @@ const CommentItem = (props: Props) => {
           </Stack>
         </div>
         <p className='block max-w-[70%] pl-2 mdd:pl-1'>{comment.text}</p>
-        <div className='flex cursor-pointer items-center gap-x-2 text-center text-typo-secondary'>
-          <Icon component={IoArrowUpCircleOutline} className='text-xl' />
-          <Icon component={IoArrowDownCircleOutline} className='text-xl' />
+        <div className='flex cursor-pointer items-center gap-x-1 text-center text-typo-secondary'>
+          <Icon
+            component={IoArrowUpCircleOutline}
+            onClick={handleVote}
+            className='text-2xl'
+          />
+          <Icon
+            component={IoArrowDownCircleOutline}
+            onClick={handleVote}
+            className='text-2xl'
+          />
           {userId === comment.creatorId && (
             <>
-              <div className='hover:text-blue'>Edit</div>
+              {/* <div className='hover:text-blue'>Edit</div> */}
               {loadingDelete ? (
                 <CircularProgress color='inherit' size={20} />
               ) : (
                 <div
-                  className='hover:text-blue'
+                  className='ml-2 hover:text-blue'
                   onClick={() => handleDeleteComment(comment)}
                 >
                   Delete

@@ -6,7 +6,6 @@ import { auth } from 'src/firebase/clientApp';
 import Directory from './Directory/Directory';
 import Logo from './Logo';
 import RightContent from './RightContent/RightContent';
-import SearchInput from './SearchInput';
 
 const NavBar = () => {
   const [user] = useAuthState(auth);
@@ -15,9 +14,11 @@ const NavBar = () => {
       <Box
         className={'mx-auto flex w-full items-center justify-between px-4 py-1'}
       >
-        <Logo />
-        {user && <Directory />}
-        <SearchInput user={user} />
+        <div className='flex-center gap-x-10 mdd:gap-x-2'>
+          <Logo />
+          {user && <Directory />}
+        </div>
+        {/* <SearchInput user={user} /> */}
         <RightContent />
       </Box>
     </Box>
