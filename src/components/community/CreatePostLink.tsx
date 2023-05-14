@@ -78,7 +78,7 @@ const CreatePostLink = ({ data }: Props) => {
         />
       </div>
       {/* actions */}
-      <div className='flex-center'>
+      <div className='flex-center hidden'>
         <Tooltip title={'Create Media Post'}>
           <IconButton
             className='flex items-center justify-center rounded border border-solid border-transparent p-[6px] hover:border-divider active:border-divider'

@@ -1,4 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { MdExpandMore } from 'react-icons/md';
 import { Box, Icon, IconButton, Menu, Typography } from '@mui/material';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -14,7 +15,7 @@ const Directory = () => {
     useDirectory();
 
   return (
-    <Box className='relative w-[17vw] mdd:w-auto' sx={{ flexGrow: 0 }}>
+    <Box className='relative w-[30vw] mobile:w-auto'>
       <IconButton
         className={clsx(
           'flex w-full items-center justify-between rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider',
@@ -45,15 +46,14 @@ const Directory = () => {
           )}
           <Typography
             variant='h4'
-            className='text-xs font-medium text-typo-primary'
+            className='text-xs font-medium text-typo-primary mobile:hidden'
           >
             {directoryState.selectedMenuItem.displayText}
           </Typography>
         </div>
-        <ExpandMoreIcon />
+        <Icon component={MdExpandMore} className='font-2xl text-typo-primary' />
       </IconButton>
       <Menu
-        id='menu-appbar'
         anchorEl={directoryState.isOpen ? buttonRef.current : null}
         anchorOrigin={{
           vertical: 'top',
@@ -70,7 +70,7 @@ const Directory = () => {
           mt: '35px',
           '& .MuiMenu-paper': {
             width: '100%',
-            maxWidth: '17vw',
+            maxWidth: '250px',
           },
         }}
       >

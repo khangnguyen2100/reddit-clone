@@ -14,7 +14,7 @@ const NavBar = () => {
       <Box
         className={'mx-auto flex w-full items-center justify-between px-4 py-1'}
       >
-        <div className='flex-center gap-x-10 mdd:gap-x-2'>
+        <div className='flex-center gap-x-10 mdd:gap-x-5'>
           <Logo />
           {user && <Directory />}
         </div>

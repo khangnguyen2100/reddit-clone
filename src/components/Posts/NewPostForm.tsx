@@ -35,17 +35,13 @@ const formTabs: TabItemProps[] = [
     title: 'Image & Video',
     icon: IoImage,
   },
-  {
-    title: 'Link',
-    icon: BsLink45Deg,
-  },
-  {
-    title: 'Poll',
-    icon: BiPoll,
-  },
   // {
-  //   title: 'Talk',
-  //   icon: BsMic,
+  //   title: 'Link',
+  //   icon: BsLink45Deg,
+  // },
+  // {
+  //   title: 'Poll',
+  //   icon: BiPoll,
   // },
 ];
 type NewPostFormProps = {

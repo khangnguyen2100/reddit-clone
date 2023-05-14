@@ -62,7 +62,7 @@ const DropDownMenu = () => {
               {/* avatar */}
               <Image src={avatarSrc} width={31} height={31} alt='name' />
               {/* name */}
-              <div className='flex flex-col items-start gap-y-[2px]'>
+              <div className='flex flex-col items-start gap-y-[2px] mdd:hidden'>
                 <Typography
                   variant='h4'
                   className='text-xs font-medium text-typo-primary'
