@@ -68,6 +68,8 @@ const ListItem = (props: ItemProps) => {
   );
 };
 const TopCommunities = () => {
+  const { isUserJoinedCommunity, toggleJoinOrLeaveCommunity } =
+    useCommunityData();
   const [topCommunities, setTopCommunities] = useState<Community[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const getTopCommunities = async () => {
@@ -88,6 +90,13 @@ const TopCommunities = () => {
       console.log(error.message);
     }
     setLoading(false);
+  };
+  const handleJoinAllCommunities = () => {
+    topCommunities.forEach(item => {
+      if (!isUserJoinedCommunity(item.id)) {
+        toggleJoinOrLeaveCommunity(item, false);
+      }
+    });
   };
   useEffect(() => {
     getTopCommunities();
@@ -121,8 +130,12 @@ const TopCommunities = () => {
                   />
                 );
               })}
-              <ButtonBg className='mt-5 w-full' color='blue'>
-                View all
+              <ButtonBg
+                className='mt-5 w-full'
+                color='blue'
+                onClick={handleJoinAllCommunities}
+              >
+                Join All
               </ButtonBg>
             </div>
           )}
