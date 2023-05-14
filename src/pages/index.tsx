@@ -125,7 +125,10 @@ export default function Home() {
   useEffect(() => {
     // after fetched snippets from useCommunityData
     if (communityStateValue.snippetsFetch) userHomeFeed();
-  }, [communityStateValue.snippetsFetch]);
+  }, [
+    communityStateValue.snippetsFetch,
+    communityStateValue?.mySnippets?.length,
+  ]);
   useEffect(() => {
     // only check user after loaded
     if (!user && !loadingUser) noUserHomeFeed();
