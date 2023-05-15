@@ -15,6 +15,7 @@ import { defaultState } from 'src/atoms/directoryAtom';
 import PageContent from 'src/components/Layout/PageContent';
 import PostItem from 'src/components/Posts/PostItem';
 import PostLoader from 'src/components/Posts/PostLoader';
+import { ButtonBg } from 'src/components/common';
 import PersonalHome from 'src/components/community/PersonalHome';
 import TopCommunities from 'src/components/community/TopCommunities';
 import { auth, db } from 'src/firebase/clientApp';
@@ -46,7 +47,7 @@ export default function Home() {
         const postsQuery = query(
           collection(db, 'posts'),
           where('communityId', 'in', communityIds),
-          limit(10),
+          limit(35),
           orderBy('createdAt', 'desc'),
         );
         const postsDocs = await getDocs(postsQuery);
@@ -81,7 +82,7 @@ export default function Home() {
       const postsQuery = query(
         collection(db, 'posts'),
         where('communityId', 'in', publicCommunityDataIds),
-        limit(10),
+        limit(35),
         orderBy('voteCount', 'desc'),
       );
       const postDocs = await getDocs(postsQuery);
@@ -148,29 +149,41 @@ export default function Home() {
         {loading ? (
           <PostLoader />
         ) : (
-          <Stack spacing={1.5} direction={'column'} className='mt-3'>
-            {postsStateValue.posts.map(post => (
-              <PostItem
-                post={post}
-                key={post.id}
-                isCreator={post.creatorId === user?.uid}
-                voteValue={
-                  postsStateValue.postVotes.find(
-                    item => item.postId === post.id,
-                  )?.voteValue
-                }
-                onDeletePost={onDeletePost}
-                onSelectPost={onSelectPost}
-                onVote={onVote}
-              />
-            ))}
-          </Stack>
+          <>
+            <Stack spacing={1.5} direction={'column'} className='mt-3'>
+              {postsStateValue.posts.map(post => (
+                <PostItem
+                  post={post}
+                  key={post.id}
+                  isCreator={post.creatorId === user?.uid}
+                  voteValue={
+                    postsStateValue.postVotes.find(
+                      item => item.postId === post.id,
+                    )?.voteValue
+                  }
+                  onDeletePost={onDeletePost}
+                  onSelectPost={onSelectPost}
+                  onVote={onVote}
+                />
+              ))}
+            </Stack>
+            <div
+              className='flex-center w-full'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
+              <ButtonBg color='orange' outline className='mx-auto mb-5 mt-10'>
+                Back to Top
+              </ButtonBg>
+            </div>
+          </>
         )}
       </>
       <>
         <Stack spacing={2} className='mt-3'>
-          <TopCommunities />
           <PersonalHome />
+          <TopCommunities />
         </Stack>
       </>
     </PageContent>

@@ -265,13 +265,13 @@ const CreateCommunities = (props: Props) => {
                   value={item.name}
                   control={<Radio />}
                   label={
-                    <div className='flex items-center gap-x-2'>
+                    <div className='flex items-center gap-x-2 mdd:mb-2 mdd:first:mt-2'>
                       <Icon
                         as={item.icon}
                         className='text-xl text-typo-secondary'
                         component={item.icon}
                       />
-                      <div className='flex items-baseline gap-x-2'>
+                      <div className='flex items-baseline gap-x-2 mdd:flex-col mdd:items-start'>
                         <Typography className='font-medium text-typo-primary'>
                           {item.label}
                         </Typography>
