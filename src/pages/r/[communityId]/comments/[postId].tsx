@@ -1,4 +1,5 @@
 import { doc, getDoc } from 'firebase/firestore';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect } from 'react';
@@ -44,6 +45,9 @@ const CommunityPage = () => {
 
   return (
     <>
+      <Head>
+        <title>{postsStateValue.selectedPost?.title}</title>
+      </Head>
       {postsStateValue.selectedPost && (
         <PageContent>
           <>
@@ -73,29 +77,5 @@ const CommunityPage = () => {
     </>
   );
 };
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//   // get community data and pass it to client
-//   try {
-//     const communityName = context.query.communityId as string;
-
-//     const communityDocRef = doc(db, 'communities', communityName);
-//     const communityDoc = await getDoc(communityDocRef);
-//     return {
-//       props: {
-//         communityData: communityDoc.exists()
-//           ? JSON.parse(
-//               safeJsonStringify({
-//                 id: communityDoc.id,
-//                 ...communityDoc.data(),
-//               }),
-//             )
-//           : '',
-//       },
-//     };
-//   } catch (error) {
-//     // add error page here later.
-//     console.log('Error: from getServerSideProps communityId Page', error);
-//   }
-// }
 
 export default CommunityPage;

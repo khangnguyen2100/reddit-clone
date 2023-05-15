@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from 'next';
 import React, { useEffect } from 'react';
 import safeJsonStringify from 'safe-json-stringify';
 import { useSetRecoilState } from 'recoil';
+import Head from 'next/head';
 
 import { Community, communityState } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
@@ -28,6 +29,9 @@ const CommunityPage = ({ communityData }: CommunityPageProps) => {
   }
   return (
     <>
+      <Head>
+        <title>{communityData.id} Community</title>
+      </Head>
       <Header data={communityData} />
       <PageContent>
         <>
