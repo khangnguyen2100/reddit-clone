@@ -56,6 +56,13 @@ const About = () => {
     setUploadingImage(false);
   };
   const checkUserSigned = async () => {
+    if (!user) {
+      enqueueSnackbar('Please sign in to create a post', {
+        variant: 'info',
+      });
+      return;
+    }
+
     const userDocRef = doc(
       db,
       `users/${user?.uid!}/communitySnippets`,
@@ -64,12 +71,6 @@ const About = () => {
     const userDoc = await getDoc(userDocRef);
     const userDocData = userDoc.data();
 
-    if (!user) {
-      enqueueSnackbar('Please sign in to create a post', {
-        variant: 'info',
-      });
-      return;
-    }
     if (!userDocData) {
       enqueueSnackbar('Join this community to create a post', {
         variant: 'info',
