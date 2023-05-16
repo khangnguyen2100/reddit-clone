@@ -3,8 +3,9 @@ import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { RecoilRoot } from 'recoil';
+import NextNProgress from 'nextjs-progressbar';
 import { SnackbarProvider } from 'notistack';
+import { RecoilRoot } from 'recoil';
 
 import Layout from 'src/components/Layout/Layout';
 import createEmotionCache from 'src/createEmotionCache';
@@ -52,6 +53,11 @@ export default function MyApp(props: MyAppProps) {
             }}
           >
             <Layout>
+              <NextNProgress
+                color='hsl(205, 98%, 39%)'
+                stopDelayMs={200}
+                showOnShallow={true}
+              />
               <Component {...pageProps} />
             </Layout>
           </SnackbarProvider>
