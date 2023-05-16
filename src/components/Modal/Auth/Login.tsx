@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { authModalState } from 'src/atoms';
+import { authModalState, uiSettingState } from 'src/atoms';
 import { ButtonBg } from 'src/components/common';
 import { auth } from 'src/firebase/clientApp';
 import { FIREBASE_ERRORS } from 'src/firebase/constants';
@@ -12,7 +12,7 @@ import OAuth from './OAuth';
 
 const Login = () => {
   const setAuthModal = useSetRecoilState(authModalState);
-
+  const guestModeState = useRecoilValue(uiSettingState);
   const [formError, setFormError] = useState<string>('');
   const [loginForm, setLoginForm] = useState({
     email: '',
@@ -53,15 +53,23 @@ const Login = () => {
     setFormError('');
     signInWithEmailAndPassword(email, password);
   };
+  useEffect(() => {
+    if (guestModeState.guestMode) {
+      signInWithEmailAndPassword(
+        process.env.NEXT_PUBLIC_GUEST_MODE_ACCOUNT_EMAIL || '',
+        process.env.NEXT_PUBLIC_GUEST_MODE_ACCOUNT_PASSWORD || '',
+      );
+    }
+  }, [guestModeState.guestMode]);
 
   return (
-    <div className='flex flex-col gap-y-2'>
+    <div className='flex flex-col'>
       <OAuth />
 
       {/* inputs */}
       <form
         onSubmit={handleSubmit}
-        className='flex w-full flex-col items-center justify-center gap-y-3'
+        className='flex w-full flex-col items-center justify-center gap-y-2'
       >
         <Input
           id='email'
@@ -86,7 +94,7 @@ const Login = () => {
             ]}
         </em>
         {/* link */}
-        <div className='my-4 block text-sm'>
+        <div className='mb-4 block text-sm'>
           Forgot your
           <p
             onClick={() => {
