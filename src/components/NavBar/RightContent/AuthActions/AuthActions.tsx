@@ -98,7 +98,7 @@ const AuthActions = () => {
           }}
         >
           <div className='flex-center h-fit flex-col'>
-            <div className='mb-4'>
+            <div className='mb-2'>
               <Typography variant='h4' className='text-xl font-medium'>
                 {renderTitle()}
               </Typography>
@@ -119,7 +119,7 @@ const AuthActions = () => {
               </IconButton>
             </div>
             <DialogContent className='w-full'>
-              <AuthInputs />
+              <AuthInputs key={authModal.open + ''} />
             </DialogContent>
           </div>
         </Dialog>
