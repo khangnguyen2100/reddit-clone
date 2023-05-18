@@ -30,7 +30,7 @@ const CommunityPage = ({ communityData }: CommunityPageProps) => {
   return (
     <>
       <Head>
-        <title>{communityData.id} Community</title>
+        <title>{`${communityData.id} Community`}</title>
       </Head>
       <Header data={communityData} />
       <PageContent>

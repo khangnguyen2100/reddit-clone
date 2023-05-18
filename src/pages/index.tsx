@@ -172,16 +172,18 @@ export default function Home() {
                   />
                 ))}
               </Stack>
-              <div
-                className='flex-center w-full'
-                onClick={() => {
-                  window.scrollTo(0, 0);
-                }}
-              >
-                <ButtonBg color='orange' outline className='mx-auto mb-5 mt-10'>
-                  Back to Top
-                </ButtonBg>
-              </div>
+              {postsStateValue.posts.length && (
+                <div
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
+                  className='flex-center min-h-[20vh] w-full text-center'
+                >
+                  <p className='text-2xl font-medium text-typo-secondary'>
+                    {"You've reached the end of the page. "}
+                  </p>
+                </div>
+              )}
             </>
           )}
         </>
