@@ -12,15 +12,25 @@ import { useSetRecoilState } from 'recoil';
 
 import { uiSettingState } from 'src/atoms';
 import { auth } from 'src/firebase/clientApp';
+import useConfirm from 'src/hooks/useConfirm';
 const OAuth = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
   const [signInWithGithub] = useSignInWithGithub(auth);
   const setGuestModeState = useSetRecoilState(uiSettingState);
+  const { ConfirmModal, confirmResult } = useConfirm({
+    title: 'Sign in with Guest Mode',
+    message:
+      "Remember you're sign in with a fake email. You can't reset your password.",
+  });
+
   const handleSignInWithGuestMode = async () => {
-    setGuestModeState(prev => ({
-      ...prev,
-      guestMode: true,
-    }));
+    const ans = await confirmResult();
+    if (ans) {
+      setGuestModeState(prev => ({
+        ...prev,
+        guestMode: true,
+      }));
+    }
   };
   const logoClassName =
     'absolute top-1/2 group-hover:left-8 transform -translate-y-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out left-12';
@@ -65,6 +75,7 @@ const OAuth = () => {
           OR
         </legend>
       </fieldset>
+      <ConfirmModal />
     </div>
   );
 };
