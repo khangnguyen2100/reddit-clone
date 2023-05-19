@@ -16,7 +16,6 @@ import { defaultState } from 'src/atoms/directoryAtom';
 import PageContent from 'src/components/Layout/PageContent';
 import PostItem from 'src/components/Posts/PostItem';
 import PostLoader from 'src/components/Posts/PostLoader';
-import { ButtonBg } from 'src/components/common';
 import PersonalHome from 'src/components/community/PersonalHome';
 import TopCommunities from 'src/components/community/TopCommunities';
 import { auth, db } from 'src/firebase/clientApp';
@@ -172,7 +171,7 @@ export default function Home() {
                   />
                 ))}
               </Stack>
-              {postsStateValue.posts.length && (
+              {postsStateValue.posts.length > 0 && (
                 <div
                   onClick={() => {
                     window.scrollTo(0, 0);

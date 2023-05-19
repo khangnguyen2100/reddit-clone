@@ -84,7 +84,7 @@ const Posts = (props: Props) => {
               />
             ))}
           </Stack>
-          {postsStateValue.posts.length && (
+          {postsStateValue.posts.length > 0 && (
             <div
               onClick={() => {
                 window.scrollTo(0, 0);

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, Icon, Skeleton } from '@mui/material';
 import { FaReddit } from 'react-icons/fa';
 import Link from 'next/link';
@@ -68,8 +68,11 @@ const ListItem = (props: ItemProps) => {
   );
 };
 const TopCommunities = () => {
-  const { isUserJoinedCommunity, toggleJoinOrLeaveCommunity } =
-    useCommunityData();
+  const {
+    isUserJoinedCommunity,
+    toggleJoinOrLeaveCommunity,
+    communityStateValue,
+  } = useCommunityData();
   const [topCommunities, setTopCommunities] = useState<Community[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const getTopCommunities = async () => {
@@ -98,6 +101,10 @@ const TopCommunities = () => {
       }
     });
   };
+  const isJoinedAll = useMemo(() => {
+    return topCommunities.every(item => isUserJoinedCommunity(item.id));
+  }, [topCommunities, communityStateValue.mySnippets]);
+
   useEffect(() => {
     getTopCommunities();
   }, []);
@@ -134,6 +141,7 @@ const TopCommunities = () => {
                 className='mt-5 w-full'
                 color='blue'
                 onClick={handleJoinAllCommunities}
+                disabled={isJoinedAll}
               >
                 Join All
               </ButtonBg>
