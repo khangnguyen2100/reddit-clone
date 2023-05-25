@@ -2,6 +2,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {
   Box,
+  Divider,
+  Icon,
   IconButton,
   Menu,
   MenuItem,
@@ -14,7 +16,9 @@ import React from 'react';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { FiLogIn, FiLogOut } from 'react-icons/fi';
 import { IoSparkles } from 'react-icons/io5';
+import { CgProfile } from 'react-icons/cg';
 import { useSetRecoilState } from 'recoil';
+import Link from 'next/link';
 
 import getUserDisplayName from '@/utils/getUserDisplayName';
 import avatarSrc from 'public/images/avatar.png';
@@ -100,19 +104,21 @@ const DropDownMenu = () => {
         {user && (
           <div>
             {/* profile */}
-            {/* <MenuItem>
-              <CgProfile
-                className='mr-[10px] text-typo-primary'
-                fontSize={20}
-              />
-              <Typography
-                className='font-medium text-typo-primary'
-                textAlign='center'
-              >
-                Profile
-              </Typography>
+            <MenuItem>
+              <Link href='/user/profile' className='flex-center'>
+                <Icon
+                  component={CgProfile}
+                  className='mr-[10px] text-xl text-typo-primary'
+                />
+                <Typography
+                  className='font-medium text-typo-primary'
+                  textAlign='center'
+                >
+                  Profile
+                </Typography>
+              </Link>
             </MenuItem>
-            <Divider /> */}
+            <Divider />
             {/* darkMode */}
             {/* <MenuItem>
               <AiOutlineEye

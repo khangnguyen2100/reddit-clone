@@ -14,8 +14,6 @@ import { db } from 'src/firebase/clientApp';
 import useCheckUser from 'src/hooks/useCheckUser';
 import usePosts from 'src/hooks/usePosts';
 
-import { ButtonBg } from '../common';
-
 import PostItem from './PostItem';
 import PostLoader from './PostLoader';
 
