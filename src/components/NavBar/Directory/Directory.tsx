@@ -14,12 +14,13 @@ const Directory = () => {
     useDirectory();
 
   return (
-    <Box className='relative w-[260px] mobile:w-auto'>
+    <div className='relative w-[260px] mobile:w-auto'>
       <IconButton
         className={clsx(
           'flex w-full items-center justify-between rounded border border-solid border-transparent px-[15px] py-[6px] hover:border-divider active:border-divider',
           directoryState.isOpen && '!border-divider',
         )}
+        component={Box}
         onClick={openDirectoryMenu}
         ref={buttonRef}
       >
@@ -84,7 +85,7 @@ const Directory = () => {
         </MenuItem> */}
         <Communities />
       </Menu>
-    </Box>
+    </div>
   );
 };
 
