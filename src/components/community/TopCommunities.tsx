@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, Icon, Skeleton } from '@mui/material';
 import { FaReddit } from 'react-icons/fa';
 import Link from 'next/link';
+import millify from 'millify';
 
 import { Community } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
@@ -49,11 +50,16 @@ const ListItem = (props: ItemProps) => {
             <Icon component={FaReddit} className={'text-2xl text-blue'} />
           </div>
         )}
-        <Link href={`/r/${communityId}`} className=' grow'>
-          <h3 className='ml-3 overflow-hidden text-ellipsis whitespace-normal font-medium text-typo-primary hover:text-blue hover:underline'>
-            r/{communityId}
-          </h3>
-        </Link>
+        <div className='ml-3 flex grow  flex-col'>
+          <Link href={`/r/${communityId}`} className=''>
+            <h3 className='overflow-hidden text-ellipsis whitespace-normal font-medium text-typo-primary hover:text-blue hover:underline'>
+              r/{communityId}
+            </h3>
+          </Link>
+          <span className='block font-ibm text-xs'>
+            {millify(communityData.numberOfMembers)} members
+          </span>
+        </div>
         <ButtonBg
           color='blue'
           outline={!isJoined}
