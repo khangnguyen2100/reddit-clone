@@ -10,7 +10,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { FaReddit } from 'react-icons/fa';
-import { MdOutlineLibraryBooks } from 'react-icons/md';
 import {
   IoArrowDownCircleOutline,
   IoArrowDownCircleSharp,
@@ -161,8 +160,8 @@ const PostItem = (props: PropsPostItem) => {
 const PostTab = (props: Props) => {
   const { user } = props;
   const [loading, setLoading] = useState<boolean>(false);
-  const [postsData, setPostsData] = useState<Post[]>([]);
-  const { onSelectPost, onVote, postsStateValue, setPostStateValue } = usePosts();
+  const { onSelectPost, onVote, postsStateValue, setPostStateValue } =
+    usePosts();
   const getPosts = async () => {
     setLoading(true);
     try {
@@ -177,7 +176,6 @@ const PostTab = (props: Props) => {
         id: item.id,
         ...item.data(),
       })) as Post[];
-      setPostsData(posts);
       setPostStateValue(prev => ({
         ...prev,
         posts: posts as Post[],

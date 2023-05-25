@@ -3,8 +3,11 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect } from 'react';
+import { FaReddit } from 'react-icons/fa';
+import { useSetRecoilState } from 'recoil';
 
 import { Post } from 'src/atoms';
+import { directoryMenuState } from 'src/atoms/directoryAtom';
 import PageContent from 'src/components/Layout/PageContent';
 import Comments from 'src/components/Posts/Comments/Comments';
 import PostItem from 'src/components/Posts/PostItem';
@@ -19,6 +22,7 @@ const CommunityPage = () => {
     usePosts();
 
   const { user } = useCheckUser();
+  const setDirectoryState = useSetRecoilState(directoryMenuState);
   const fetchPostById = async (postId: string) => {
     try {
       const postDocRef = doc(db, 'posts', postId);
@@ -42,7 +46,17 @@ const CommunityPage = () => {
       fetchPostById(postId as string);
     }
   }, [router.query, postsStateValue.selectedPost]);
-
+  useEffect(() => {
+    setDirectoryState(prev => ({
+      ...prev,
+      selectedMenuItem: {
+        displayText: postsStateValue.selectedPost?.communityId!,
+        link: `/r/${postsStateValue.selectedPost?.communityId}`,
+        icon: FaReddit,
+        imageURL: postsStateValue.selectedPost?.communityImageURL,
+      },
+    }));
+  }, [router.pathname]);
   return (
     <>
       <Head>

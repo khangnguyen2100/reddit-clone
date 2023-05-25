@@ -3,8 +3,10 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import Image from 'next/image';
 import { enqueueSnackbar } from 'notistack';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { RiUpload2Line } from 'react-icons/ri';
+import { CgProfile } from 'react-icons/cg';
+import { useRouter } from 'next/router';
 
 import getUserDisplayName from '@/utils/getUserDisplayName';
 import defaultAvatar from 'public/images/avatar-full.png';
@@ -16,6 +18,7 @@ import useSelectFile from 'src/hooks/useSelectFile';
 import { ButtonBg } from '../common';
 
 const Profile = () => {
+  const router = useRouter();
   const { userSigned, user } = useCheckUser();
   const photoURL = useRef<string>('');
   const getUserAvatar = async () => {
@@ -23,7 +26,7 @@ const Profile = () => {
     const userDoc = await getDoc(userDocRef);
     photoURL.current = userDoc.data()?.photoURL || '';
   };
-  const { toggleDirectoryOpenMenu } = useDirectory();
+  const { toggleDirectoryOpenMenu, setDirectoryState } = useDirectory();
 
   const handleOpenCreatePost = () => {
     if (userSigned()) {
@@ -52,6 +55,17 @@ const Profile = () => {
     setSelectedFile('');
     setUploadingImage(false);
   };
+  useEffect(() => {
+    setDirectoryState(prev => ({
+      ...prev,
+      selectedMenuItem: {
+        displayText: 'Profile',
+        icon: CgProfile,
+        link: 'user/profile',
+      },
+    }));
+  }, [router.pathname]);
+
   // useEffect(() => {
   //   if (user) {
   //     getUserAvatar();

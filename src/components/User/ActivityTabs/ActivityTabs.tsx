@@ -6,6 +6,7 @@ import SwipeableViews from 'react-swipeable-views';
 import useCheckUser from 'src/hooks/useCheckUser';
 
 import PostTab from './PostTab';
+import CommentsTab from './CommentTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -71,7 +72,7 @@ const ActivityTabs = () => {
           <PostTab user={user} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          <CommentsTab user={user} />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Item Three

@@ -1,13 +1,12 @@
-import Head from 'next/head';
-import React from 'react';
-
-import PageContent from 'src/components/Layout/PageContent';
-import useCheckUser from 'src/hooks/useCheckUser';
-import getUserDisplayName from '@/utils/getUserDisplayName';
-import ActivityTabs from 'src/components/User/ActivityTabs/ActivityTabs';
-import Profile from 'src/components/User/Profile';
-import ModeratorList from 'src/components/User/ModeratorList';
 import { Stack } from '@mui/material';
+import Head from 'next/head';
+
+import getUserDisplayName from '@/utils/getUserDisplayName';
+import PageContent from 'src/components/Layout/PageContent';
+import ActivityTabs from 'src/components/User/ActivityTabs/ActivityTabs';
+import ModeratorList from 'src/components/User/ModeratorList';
+import Profile from 'src/components/User/Profile';
+import useCheckUser from 'src/hooks/useCheckUser';
 
 const Index = () => {
   const { user } = useCheckUser();
