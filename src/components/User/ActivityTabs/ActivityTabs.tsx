@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import React from 'react';
-import { TabContext } from '@mui/lab';
+import SwipeableViews from 'react-swipeable-views';
 
 import useCheckUser from 'src/hooks/useCheckUser';
 
@@ -8,6 +9,7 @@ import PostTab from './PostTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
+  dir?: string;
   index: number;
   value: number;
 }
@@ -19,8 +21,8 @@ function TabPanel(props: TabPanelProps) {
     <div
       role='tabpanel'
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -31,13 +33,20 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
+
 const ActivityTabs = () => {
   const [value, setValue] = React.useState(0);
-  console.log('value:', value);
   const { user } = useCheckUser();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const theme = useTheme();
+
+  const handleChangeIndex = (index: number) => {
+    setValue(index);
+  };
+
   return (
     <Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -53,19 +62,21 @@ const ActivityTabs = () => {
           <Tab label='DOWN VOTED' />
         </Tabs>
       </Box>
-      <Box className='mt-3'>
-        {value === 0 ? (
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} dir={theme.direction}>
           <PostTab user={user} />
-        ) : value === 1 ? (
-          <div>Item Two</div>
-        ) : value === 2 ? (
-          <div>Item Three</div>
-        ) : value === 3 ? (
-          <div>Item Four</div>
-        ) : value === 4 ? (
-          <div>Item Five</div>
-        ) : null}
-      </Box>
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          Item Two
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          Item Three
+        </TabPanel>
+      </SwipeableViews>
     </Box>
   );
 };
