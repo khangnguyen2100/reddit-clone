@@ -18,7 +18,7 @@ import {
   IoArrowUpCircleSharp,
 } from 'react-icons/io5';
 
-import { Post } from 'src/atoms';
+import { Post, PostVotes } from 'src/atoms';
 import { db } from 'src/firebase/clientApp';
 import usePosts from 'src/hooks/usePosts';
 
@@ -102,10 +102,6 @@ const PostItem = (props: PropsPostItem) => {
             // post image
             post.imageURL && (
               <div className='flex-center relative h-[72px] w-24 overflow-hidden bg-gray-200'>
-                {/* <Icon
-                  component={MdOutlineLibraryBooks}
-                  className='text-base text-typo-secondary'
-                ></Icon> */}
                 <Image
                   src={post.imageURL}
                   fill
@@ -161,12 +157,12 @@ const PostItem = (props: PropsPostItem) => {
     </>
   );
 };
+
 const PostTab = (props: Props) => {
   const { user } = props;
   const [loading, setLoading] = useState<boolean>(false);
   const [postsData, setPostsData] = useState<Post[]>([]);
-  console.log('postsData:', postsData);
-  const { onSelectPost, onVote, postsStateValue } = usePosts();
+  const { onSelectPost, onVote, postsStateValue, setPostStateValue } = usePosts();
   const getPosts = async () => {
     setLoading(true);
     try {
@@ -182,10 +178,41 @@ const PostTab = (props: Props) => {
         ...item.data(),
       })) as Post[];
       setPostsData(posts);
+      setPostStateValue(prev => ({
+        ...prev,
+        posts: posts as Post[],
+      }));
+      getUserPostVote(posts);
     } catch (error) {
       console.log('error:', error);
     }
     setLoading(false);
+  };
+  const getUserPostVote = async (posts: Post[]) => {
+    try {
+      const postsIds = posts.map(post => post.id);
+      const postVotesQuery = query(
+        collection(db, `users`, `${user?.uid}/postVotes`),
+        where('postId', 'in', postsIds),
+      );
+      const postVotesDocs = await getDocs(postVotesQuery);
+      const postVotes = postVotesDocs.docs.map(item => ({
+        id: item.id,
+        ...item.data(),
+      })) as PostVotes[];
+
+      const orderPostVotes: PostVotes[] = [];
+      postsStateValue.posts.forEach(post => {
+        const result = postVotes.find(vote => vote.postId === post.id);
+        if (result) orderPostVotes.push(result);
+      });
+      setPostStateValue(prev => ({
+        ...prev,
+        postVotes: postVotes as PostVotes[],
+      }));
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
   useEffect(() => {
     if (user?.uid) {
@@ -198,7 +225,7 @@ const PostTab = (props: Props) => {
         <Loading />
       ) : (
         <Stack spacing={1}>
-          {postsData.map(post => {
+          {postsStateValue.posts.map(post => {
             return (
               <PostItem
                 onVote={onVote}
