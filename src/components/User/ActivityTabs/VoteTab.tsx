@@ -44,7 +44,14 @@ const VoteTab = (props: Props) => {
     }
   };
   const getPosts = async (upVotes: PostVotes[]) => {
-    if (upVotes.length === 0) return;
+    if (upVotes.length === 0) {
+      setPostStateValue(prev => ({
+        ...prev,
+        posts: [] as Post[],
+      }));
+      setLoading(false);
+      return;
+    }
     try {
       const upVotesIds = upVotes.map(item => item.postId);
       // post id is name of document
@@ -97,7 +104,9 @@ const VoteTab = (props: Props) => {
           ) : (
             <div className='flex-center min-h-[40vh] text-center'>
               <p className='text-center text-xl font-medium text-typo-secondary opacity-90'>
-                {"hmm... looks like you haven't post anything yet"}
+                {`hmm... looks like you haven't ${
+                  voteType === 'upVote' ? 'UpVote' : 'DownVote'
+                } anything yet`}
               </p>
             </div>
           )}
