@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
