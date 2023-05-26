@@ -115,9 +115,19 @@ const CommentsTab = (props: Props) => {
         <Loading />
       ) : (
         <Stack spacing={1}>
-          {commentsData.map(comment => {
-            return <CommentItem comment={comment} key={comment.id} />;
-          })}
+          {commentsData.length > 0 ? (
+            <>
+              {commentsData.map(comment => {
+                return <CommentItem comment={comment} key={comment.id} />;
+              })}
+            </>
+          ) : (
+            <div className='flex-center min-h-[40vh] text-center'>
+              <p className='text-center text-xl font-medium text-typo-secondary opacity-90'>
+                {`hmm... looks like you haven't comment anything yet`}
+              </p>
+            </div>
+          )}
         </Stack>
       )}
     </div>
