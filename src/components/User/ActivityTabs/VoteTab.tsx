@@ -13,34 +13,43 @@ import PostItem from './PostItem';
 
 type Props = {
   user?: User | null;
+  voteType: 'upVote' | 'downVote';
 };
 
-type PropsPostItem = {
-  post: Post;
-  voteValue?: number;
-  onVote: (
-    event: React.MouseEvent<SVGElement, MouseEvent>,
-    post: Post,
-    vote: number,
-    communityId: string,
-  ) => {};
-  onSelectPost?: (post: Post) => void;
-};
-
-const PostTab = (props: Props) => {
-  const { user } = props;
+const VoteTab = (props: Props) => {
+  const { user, voteType = 'upVote' } = props;
   const [loading, setLoading] = useState<boolean>(false);
   const { onSelectPost, onVote, postsStateValue, setPostStateValue } =
     usePosts();
-  const getPosts = async () => {
+  const getUserPostVote = async () => {
     setLoading(true);
     try {
+      const postVotesQuery = query(
+        collection(db, `users/${user?.uid}/postVotes`),
+      );
+      const postVotesDocs = await getDocs(postVotesQuery);
+      const postVotes = postVotesDocs.docs.map(item => ({
+        id: item.id,
+        ...item.data(),
+      })) as PostVotes[];
+      const type = voteType === 'upVote' ? 1 : -1;
+      const upVotes = postVotes.filter(item => item.voteValue === type);
+      setPostStateValue(prev => ({
+        ...prev,
+        postVotes: upVotes as PostVotes[],
+      }));
+      getPosts(upVotes);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+  const getPosts = async (upVotes: PostVotes[]) => {
+    if (upVotes.length === 0) return;
+    try {
+      const upVotesIds = upVotes.map(item => item.postId);
+      // post id is name of document
       const postDocs = await getDocs(
-        query(
-          collection(db, 'posts'),
-          where('creatorId', '==', user?.uid),
-          orderBy('createdAt', 'desc'),
-        ),
+        query(collection(db, 'posts'), where('__name__', 'in', upVotesIds)),
       );
       const posts = postDocs.docs.map(item => ({
         id: item.id,
@@ -50,41 +59,15 @@ const PostTab = (props: Props) => {
         ...prev,
         posts: posts as Post[],
       }));
-      getUserPostVote(posts);
     } catch (error) {
       console.log('error:', error);
     }
     setLoading(false);
   };
-  const getUserPostVote = async (posts: Post[]) => {
-    try {
-      const postsIds = posts.map(post => post.id);
-      const postVotesQuery = query(
-        collection(db, `users`, `${user?.uid}/postVotes`),
-        where('postId', 'in', postsIds),
-      );
-      const postVotesDocs = await getDocs(postVotesQuery);
-      const postVotes = postVotesDocs.docs.map(item => ({
-        id: item.id,
-        ...item.data(),
-      })) as PostVotes[];
 
-      const orderPostVotes: PostVotes[] = [];
-      postsStateValue.posts.forEach(post => {
-        const result = postVotes.find(vote => vote.postId === post.id);
-        if (result) orderPostVotes.push(result);
-      });
-      setPostStateValue(prev => ({
-        ...prev,
-        postVotes: postVotes as PostVotes[],
-      }));
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  };
   useEffect(() => {
     if (user?.uid) {
-      getPosts();
+      getUserPostVote();
     }
   }, [user?.uid]);
   return (
@@ -124,4 +107,4 @@ const PostTab = (props: Props) => {
   );
 };
 
-export default PostTab;
+export default VoteTab;

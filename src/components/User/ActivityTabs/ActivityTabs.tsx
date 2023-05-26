@@ -7,6 +7,7 @@ import useCheckUser from 'src/hooks/useCheckUser';
 
 import PostTab from './PostTab';
 import CommentsTab from './CommentTab';
+import VoteTab from './VoteTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -28,7 +29,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <div>{children}</div>
         </Box>
       )}
     </div>
@@ -58,7 +59,7 @@ const ActivityTabs = () => {
         >
           <Tab label='POSTS' />
           <Tab label='COMMENTS' />
-          <Tab label='SAVED' />
+          {/* <Tab label='SAVED' /> */}
           <Tab label='UP VOTED' />
           <Tab label='DOWN VOTED' />
         </Tabs>
@@ -75,7 +76,10 @@ const ActivityTabs = () => {
           <CommentsTab user={user} />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
+          <VoteTab user={user} voteType='upVote' />
+        </TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+          <VoteTab user={user} voteType='downVote' />
         </TabPanel>
       </SwipeableViews>
     </Box>
